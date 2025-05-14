@@ -38,11 +38,16 @@
             };
 
             const categories = Object.keys(categoryData.train);
-            const traces = ['train', 'val', 'test'].map(split => ({
+            const customColors = ['#4c72b0', '#dd8452', '#55a868', '#c44e52', '#8172b3', '#937860', '#da8bc3', '#8c8c8c', '#ccb974', '#64b5cd'];
+            
+            const traces = ['train', 'val', 'test'].map((split, i) => ({
                 name: split,
                 x: categories,
                 y: categories.map(cat => categoryData[split][cat]),
-                type: 'bar'
+                type: 'bar',
+                marker: {
+                    color: customColors[i]
+                }
             }));
 
             Plotly.newPlot('categoryBreakdownPlot', traces, {
@@ -74,11 +79,14 @@
             };
 
             const modalities = Object.keys(modalityData.train);
-            const modalityTraces = ['train', 'val', 'test'].map(split => ({
+            const modalityTraces = ['train', 'val', 'test'].map((split, i) => ({
                 name: split,
                 x: modalities,
                 y: modalities.map(mod => modalityData[split][mod]),
-                type: 'bar'
+                type: 'bar',
+                marker: {
+                    color: customColors[i]
+                }
             }));
 
             Plotly.newPlot('modalityBreakdownPlot', modalityTraces, {
@@ -89,6 +97,94 @@
                 height: 500,
                 margin: { t: 50, b: 100, l: 50, r: 50 }
             });
+
+            // Modality-Category Heatmap
+            const modalityCategoryData = {
+                visual: {
+                    description: 32050,
+                    count: 27995,
+                    action: 20056,
+                    temporal: 18785,
+                    location: 19146,
+                    'relative-position': 12593
+                },
+                audio: {
+                    description: 25471,
+                    count: 11696,
+                    temporal: 7393,
+                    action: 558,
+                    location: 43,
+                    'relative-position': 2
+                },
+                'audio-visual': {
+                    temporal: 15159,
+                    action: 27075,
+                    description: 5145,
+                    count: 2206,
+                    location: 56,
+                    'relative-position': 5
+                }
+            };
+
+            const heatmapCategories = ['description', 'count', 'action', 'temporal', 'location', 'relative-position'];
+            const heatmapModalities = ['visual', 'audio', 'audio-visual'];
+            
+            const heatmapData = [{
+                z: heatmapModalities.map(mod => heatmapCategories.map(cat => modalityCategoryData[mod][cat] || 0)),
+                x: heatmapCategories,
+                y: heatmapModalities,
+                type: 'heatmap',
+                colorscale: [
+                    [0, '#e6f3ff'],    // Very light blue
+                    [0.2, '#b3d9ff'],  // Light blue
+                    [0.4, '#80bfff'],  // Medium light blue
+                    [0.6, '#4da6ff'],  // Medium blue
+                    [0.8, '#1a8cff'],  // Dark blue
+                    [1, '#0066cc']     // Very dark blue
+                ],
+                showscale: true,
+                colorbar: {
+                    title: 'Count'
+                },
+                text: heatmapModalities.map(mod => heatmapCategories.map(cat => modalityCategoryData[mod][cat] || 0)),
+                texttemplate: '%{text:,}',
+                textfont: {
+                    size: 12
+                },
+                hoverongaps: false,
+                hoverinfo: 'text',
+                textposition: 'middle center'
+            }];
+
+            const heatmapLayout = {
+                title: 'Modality-Category Distribution',
+                xaxis: {
+                    title: 'Category',
+                    tickangle: -45
+                },
+                yaxis: {
+                    title: 'Modality'
+                },
+                height: 400,
+                margin: { t: 50, b: 100, l: 100, r: 50 },
+                annotations: heatmapModalities.flatMap((mod, i) => 
+                    heatmapCategories.map((cat, j) => {
+                        const value = modalityCategoryData[mod][cat];
+                        return {
+                            x: cat,
+                            y: mod,
+                            text: value.toLocaleString(),
+                            showarrow: false,
+                            font: {
+                                color: value > 15000 ? 'white' : 'black',
+                                size: 12
+                            }
+                        };
+                    })
+                )
+            };
+
+            Plotly.newPlot('modalityCategoryHeatmap', heatmapData, heatmapLayout);
 
             // Questions per Video Distribution
             const questionsPerVideoData = {
@@ -114,7 +210,10 @@
             const questionsPerVideoTrace = {
                 x: Object.keys(questionsPerVideoData),
                 y: Object.values(questionsPerVideoData),
-                type: 'bar'
+                type: 'bar',
+                marker: {
+                    color: customColors[0]
+                }
             };
 
             Plotly.newPlot('questionsPerVideoPlot', [questionsPerVideoTrace], {
@@ -164,7 +263,10 @@
             const questionLengthTrace = {
                 x: Object.keys(questionLengthData),
                 y: Object.values(questionLengthData),
-                type: 'bar'
+                type: 'bar',
+                marker: {
+                    color: customColors[1]
+                }
             };
 
             Plotly.newPlot('questionLengthPlot', [questionLengthTrace], {
@@ -205,7 +307,10 @@
             const correctOptionsTrace = {
                 x: Object.keys(correctOptionsData),
                 y: Object.values(correctOptionsData),
-                type: 'bar'
+                type: 'bar',
+                marker: {
+                    color: customColors[2]
+                }
             };
 
             Plotly.newPlot('correctOptionsPlot', [correctOptionsTrace], {
@@ -243,7 +348,10 @@
             const nonStopwordsTrace = {
                 x: Object.keys(nonStopwordsData),
                 y: Object.values(nonStopwordsData),
-                type: 'bar'
+                type: 'bar',
+                marker: {
+                    color: customColors[3]
+                }
             };
 
             Plotly.newPlot('nonStopwordsPlot', [nonStopwordsTrace], {
@@ -833,6 +941,7 @@
                 <div class="grid grid-cols-1 gap-6">
                     <div id="categoryBreakdownPlot" class="bg-white p-4 rounded-lg shadow"></div>
                     <div id="modalityBreakdownPlot" class="bg-white p-4 rounded-lg shadow"></div>
+                    <div id="modalityCategoryHeatmap" class="bg-white p-4 rounded-lg shadow"></div>
                     <div id="questionsPerVideoPlot" class="bg-white p-4 rounded-lg shadow"></div>
                     <div id="questionLengthPlot" class="bg-white p-4 rounded-lg shadow"></div>
                     <div id="correctOptionsPlot" class="bg-white p-4 rounded-lg shadow"></div>
