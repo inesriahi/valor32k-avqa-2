@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paper Webpage</title>
+    <title>Valor32k-AVQA-2</title>
+    <link rel="icon" type="image/png" href="icon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Category Breakdown by Split
             const categoryData = {
                 train: {
@@ -40,7 +41,7 @@
 
             const categories = Object.keys(categoryData.train);
             const customColors = ['#4c72b0', '#dd8452', '#55a868', '#c44e52', '#8172b3', '#937860', '#da8bc3', '#8c8c8c', '#ccb974', '#64b5cd'];
-            
+
             const traces = ['train', 'val', 'test'].map((split, i) => ({
                 name: split,
                 x: categories,
@@ -56,8 +57,10 @@
                 barmode: 'group',
                 xaxis: { title: 'Category' },
                 yaxis: { title: 'Count' },
-                height: 500,
-                margin: { t: 50, b: 100, l: 50, r: 50 }
+                height: 450,
+                responsive: true,
+                autosize: true,
+                margin: { t: 60, b: 100, l: 80, r: 60 }
             });
 
             // Modality Breakdown by Split
@@ -95,8 +98,10 @@
                 barmode: 'group',
                 xaxis: { title: 'Modality' },
                 yaxis: { title: 'Count' },
-                height: 500,
-                margin: { t: 50, b: 100, l: 50, r: 50 }
+                height: 450,
+                responsive: true,
+                autosize: true,
+                margin: { t: 60, b: 100, l: 80, r: 60 }
             });
 
             // Modality-Category Heatmap
@@ -129,7 +134,7 @@
 
             const heatmapCategories = ['description', 'count', 'action', 'temporal', 'location', 'relative-position'];
             const heatmapModalities = ['visual', 'audio', 'audio-visual'];
-            
+
             const heatmapData = [{
                 z: heatmapModalities.map(mod => heatmapCategories.map(cat => modalityCategoryData[mod][cat] || 0)),
                 x: heatmapCategories,
@@ -166,9 +171,11 @@
                 yaxis: {
                     title: 'Modality'
                 },
-                height: 400,
-                margin: { t: 50, b: 100, l: 100, r: 50 },
-                annotations: heatmapModalities.flatMap((mod, i) => 
+                height: 450,
+                responsive: true,
+                autosize: true,
+                margin: { t: 60, b: 100, l: 100, r: 60 },
+                annotations: heatmapModalities.flatMap((mod, i) =>
                     heatmapCategories.map((cat, j) => {
                         const value = modalityCategoryData[mod][cat];
                         return {
@@ -219,13 +226,15 @@
 
             Plotly.newPlot('questionsPerVideoPlot', [questionsPerVideoTrace], {
                 title: 'Questions per Video Distribution',
-                xaxis: { 
+                xaxis: {
                     title: 'Number of Questions per Video',
                     range: [0, 16]
                 },
                 yaxis: { title: 'Number of Videos' },
-                height: 500,
-                margin: { t: 50, b: 100, l: 50, r: 50 }
+                height: 450,
+                responsive: true,
+                autosize: true,
+                margin: { t: 60, b: 100, l: 80, r: 60 }
             });
 
             // Question Length Distribution
@@ -272,13 +281,15 @@
 
             Plotly.newPlot('questionLengthPlot', [questionLengthTrace], {
                 title: 'Question Length Distribution',
-                xaxis: { 
+                xaxis: {
                     title: 'Question Length (words)',
                     range: [2, 31]
                 },
                 yaxis: { title: 'Number of Questions' },
-                height: 500,
-                margin: { t: 50, b: 100, l: 50, r: 50 }
+                height: 450,
+                responsive: true,
+                autosize: true,
+                margin: { t: 60, b: 100, l: 80, r: 60 }
             });
 
             // Top 20 Correct Options
@@ -318,8 +329,10 @@
                 title: 'Top 20 Most Frequent Correct Answer Options',
                 xaxis: { title: 'Answer Option' },
                 yaxis: { title: 'Frequency' },
-                height: 500,
-                margin: { t: 50, b: 150, l: 50, r: 50 }
+                height: 450,
+                responsive: true,
+                autosize: true,
+                margin: { t: 60, b: 150, l: 80, r: 60 }
             });
 
             // Top 20 Non-stopwords
@@ -359,8 +372,29 @@
                 title: 'Top 20 Most Frequent Non-stopwords in Questions',
                 xaxis: { title: 'Word' },
                 yaxis: { title: 'Frequency' },
-                height: 500,
-                margin: { t: 50, b: 150, l: 50, r: 50 }
+                height: 450,
+                responsive: true,
+                autosize: true,
+                margin: { t: 60, b: 150, l: 80, r: 60 }
+            });
+
+            // Add window resize handler
+            window.addEventListener('resize', function () {
+                const plotIds = [
+                    'categoryBreakdownPlot',
+                    'modalityBreakdownPlot',
+                    'modalityCategoryHeatmap',
+                    'questionsPerVideoPlot',
+                    'questionLengthPlot',
+                    'correctOptionsPlot',
+                    'nonStopwordsPlot'
+                ];
+
+                plotIds.forEach(id => {
+                    Plotly.relayout(id, {
+                        'width': document.getElementById(id).offsetWidth
+                    });
+                });
             });
 
             // Interactive Visualizations
@@ -379,15 +413,35 @@
         <section class="text-center">
             <h1 class="text-3xl font-bold">Generative Audio-Visual Question Answering: A Novel Dataset and Model Using
                 LLMs</h1>
+            <div class="text-center">
+                <img src="valor32k.PNG" alt="Valor32k Overview" class="mx-auto"
+                    style="max-width: 200px; width: 100%; height: auto; margin-top: 20px;">
+            </div>
             <p class="mt-2 text-gray-700">
                 May 14, 2025
             </p>
             <div class="mt-4 flex justify-center space-x-4">
-                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100">Paper</button>
-                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100">Code</button>
-                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100">Supplementary</button>
+                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Paper</span>
+                </button>
+                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Code</span>
+                </button>
+                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Supplementary</span>
+                </button>
             </div>
         </section>
+
 
         <section>
             <h2 class="text-xl font-semibold mb-2">Abstract</h2>
@@ -948,17 +1002,13 @@
 
                 <h3 class="text-xl font-semibold mb-4">Interactive Visualizations</h3>
                 <div class="grid grid-cols-1 gap-6">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="grid grid-cols-1 gap-6">
-                            <div id="categoryBreakdownPlot" class="bg-white p-4 rounded-lg shadow"></div>
-                            <div id="modalityBreakdownPlot" class="bg-white p-4 rounded-lg shadow"></div>
-                            <div id="modalityCategoryHeatmap" class="bg-white p-4 rounded-lg shadow"></div>
-                            <div id="questionsPerVideoPlot" class="bg-white p-4 rounded-lg shadow"></div>
-                            <div id="questionLengthPlot" class="bg-white p-4 rounded-lg shadow"></div>
-                            <div id="correctOptionsPlot" class="bg-white p-4 rounded-lg shadow"></div>
-                            <div id="nonStopwordsPlot" class="bg-white p-4 rounded-lg shadow"></div>
-                        </div>
-                    </div>
+                    <div id="categoryBreakdownPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                    <div id="modalityBreakdownPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                    <div id="modalityCategoryHeatmap" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                    <div id="questionsPerVideoPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                    <div id="questionLengthPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                    <div id="correctOptionsPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                    <div id="nonStopwordsPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
                 </div>
             </div>
 
@@ -966,23 +1016,31 @@
                 <h3 class="text-xl font-semibold mb-4">Download Dataset</h3>
                 <div class="space-y-4">
                     <div class="flex items-center space-x-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
-                        <a href="https://pan.baidu.com/s/1aHWCwUOX1lJi0lSsmJb6Tw?pwd=e3ve" target="_blank" class="text-blue-600 hover:text-blue-800 underline">Download Videos</a>
+                        <a href="https://pan.baidu.com/s/1aHWCwUOX1lJi0lSsmJb6Tw?pwd=e3ve" target="_blank"
+                            class="text-blue-600 hover:text-blue-800 underline">Download Videos</a>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
-                        <a href="#" class="text-blue-600 hover:text-blue-800 underline">Download Annotations (ZIP)</a>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 underline">Download Annotations
+                            (ZIP)</a>
                     </div>
                 </div>
                 <p class="mt-4 text-sm text-gray-600">
-                    Note: The dataset is provided for research purposes only. Please refer to our license terms for usage conditions.
+                    Note: The dataset is provided for research purposes only. Please refer to our license terms for
+                    usage conditions.
                 </p>
                 <p class="mt-2 text-sm text-gray-600">
-                    Dataset source: <a href="https://github.com/TXH-mercury/VALOR?tab=readme-ov-file" target="_blank" class="text-blue-600 hover:text-blue-800">VALOR Repository</a>
+                    Dataset source: <a href="https://github.com/TXH-mercury/VALOR?tab=readme-ov-file" target="_blank"
+                        class="text-blue-600 hover:text-blue-800">VALOR Repository</a>
                 </p>
             </div>
         </section>
@@ -996,7 +1054,7 @@
   journal = {Journal of Example},
   year = {2024}
 }
-        </pre>
+            </pre>
         </section>
     </main>
 </body>
