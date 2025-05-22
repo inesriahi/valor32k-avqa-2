@@ -9,1054 +9,703 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Category Breakdown by Split
-            const categoryData = {
-                train: {
-                    description: 49241,
-                    action: 37006,
-                    count: 33276,
-                    temporal: 32855,
-                    location: 14907,
-                    'relative-position': 9826
-                },
-                val: {
-                    description: 6182,
-                    action: 4938,
-                    count: 3953,
-                    temporal: 3915,
-                    location: 1977,
-                    'relative-position': 1298
-                },
-                test: {
-                    description: 7243,
-                    action: 5745,
-                    count: 4668,
-                    temporal: 4589,
-                    location: 2361,
-                    'relative-position': 1476
-                }
-            };
-
-            const categories = Object.keys(categoryData.train);
-            const customColors = ['#4c72b0', '#dd8452', '#55a868', '#c44e52', '#8172b3', '#937860', '#da8bc3', '#8c8c8c', '#ccb974', '#64b5cd'];
-
-            const traces = ['train', 'val', 'test'].map((split, i) => ({
-                name: split,
-                x: categories,
-                y: categories.map(cat => categoryData[split][cat]),
-                type: 'bar',
-                marker: {
-                    color: customColors[i]
-                }
-            }));
-
-            Plotly.newPlot('categoryBreakdownPlot', traces, {
-                title: 'Category Breakdown by Split',
-                barmode: 'group',
-                xaxis: { title: 'Category' },
-                yaxis: { title: 'Count' },
-                height: 450,
-                responsive: true,
-                autosize: true,
-                margin: { t: 60, b: 100, l: 80, r: 60 }
-            });
-
-            // Modality Breakdown by Split
-            const modalityData = {
-                train: {
-                    visual: 101551,
-                    'audio-visual': 39545,
-                    audio: 36031
-                },
-                val: {
-                    visual: 13356,
-                    'audio-visual': 4684,
-                    audio: 4221
-                },
-                test: {
-                    visual: 15719,
-                    'audio-visual': 5429,
-                    audio: 4937
-                }
-            };
-
-            const modalities = Object.keys(modalityData.train);
-            const modalityTraces = ['train', 'val', 'test'].map((split, i) => ({
-                name: split,
-                x: modalities,
-                y: modalities.map(mod => modalityData[split][mod]),
-                type: 'bar',
-                marker: {
-                    color: customColors[i]
-                }
-            }));
-
-            Plotly.newPlot('modalityBreakdownPlot', modalityTraces, {
-                title: 'Modality Breakdown by Split',
-                barmode: 'group',
-                xaxis: { title: 'Modality' },
-                yaxis: { title: 'Count' },
-                height: 450,
-                responsive: true,
-                autosize: true,
-                margin: { t: 60, b: 100, l: 80, r: 60 }
-            });
-
-            // Modality-Category Heatmap
-            const modalityCategoryData = {
-                visual: {
-                    description: 32050,
-                    count: 27995,
-                    action: 20056,
-                    temporal: 18785,
-                    location: 19146,
-                    'relative-position': 12593
-                },
-                audio: {
-                    description: 25471,
-                    count: 11696,
-                    temporal: 7393,
-                    action: 558,
-                    location: 43,
-                    'relative-position': 2
-                },
-                'audio-visual': {
-                    temporal: 15159,
-                    action: 27075,
-                    description: 5145,
-                    count: 2206,
-                    location: 56,
-                    'relative-position': 5
-                }
-            };
-
-            const heatmapCategories = ['description', 'count', 'action', 'temporal', 'location', 'relative-position'];
-            const heatmapModalities = ['visual', 'audio', 'audio-visual'];
-
-            const heatmapData = [{
-                z: heatmapModalities.map(mod => heatmapCategories.map(cat => modalityCategoryData[mod][cat] || 0)),
-                x: heatmapCategories,
-                y: heatmapModalities,
-                type: 'heatmap',
-                colorscale: [
-                    [0, '#e6f3ff'],    // Very light blue
-                    [0.2, '#b3d9ff'],  // Light blue
-                    [0.4, '#80bfff'],  // Medium light blue
-                    [0.6, '#4da6ff'],  // Medium blue
-                    [0.8, '#1a8cff'],  // Dark blue
-                    [1, '#0066cc']     // Very dark blue
-                ],
-                showscale: true,
-                colorbar: {
-                    title: 'Count'
-                },
-                text: heatmapModalities.map(mod => heatmapCategories.map(cat => modalityCategoryData[mod][cat] || 0)),
-                texttemplate: '%{text:,}',
-                textfont: {
-                    size: 12
-                },
-                hoverongaps: false,
-                hoverinfo: 'text',
-                textposition: 'middle center'
-            }];
-
-            const heatmapLayout = {
-                title: 'Modality-Category Distribution',
-                xaxis: {
-                    title: 'Category',
-                    tickangle: -45
-                },
-                yaxis: {
-                    title: 'Modality'
-                },
-                height: 450,
-                responsive: true,
-                autosize: true,
-                margin: { t: 60, b: 100, l: 100, r: 60 },
-                annotations: heatmapModalities.flatMap((mod, i) =>
-                    heatmapCategories.map((cat, j) => {
-                        const value = modalityCategoryData[mod][cat];
-                        return {
-                            x: cat,
-                            y: mod,
-                            text: value.toLocaleString(),
-                            showarrow: false,
-                            font: {
-                                color: value > 15000 ? 'white' : 'black',
-                                size: 12
-                            }
-                        };
-                    })
-                )
-            };
-
-            Plotly.newPlot('modalityCategoryHeatmap', heatmapData, heatmapLayout);
-
-            // Questions per Video Distribution
-            const questionsPerVideoData = {
-                "0": 1,
-                "1": 23,
-                "2": 797,
-                "3": 1016,
-                "4": 42,
-                "5": 3963,
-                "6": 1113,
-                "7": 8772,
-                "8": 3517,
-                "9": 2317,
-                "10": 2482,
-                "11": 189,
-                "12": 3423,
-                "13": 1128,
-                "14": 65,
-                "15": 13,
-                "16": 2
-            };
-
-            const questionsPerVideoTrace = {
-                x: Object.keys(questionsPerVideoData),
-                y: Object.values(questionsPerVideoData),
-                type: 'bar',
-                marker: {
-                    color: customColors[0]
-                }
-            };
-
-            Plotly.newPlot('questionsPerVideoPlot', [questionsPerVideoTrace], {
-                title: 'Questions per Video Distribution',
-                xaxis: {
-                    title: 'Number of Questions per Video',
-                    range: [0, 16]
-                },
-                yaxis: { title: 'Number of Videos' },
-                height: 450,
-                responsive: true,
-                autosize: true,
-                margin: { t: 60, b: 100, l: 80, r: 60 }
-            });
-
-            // Question Length Distribution
-            const questionLengthData = {
-                "2": 2,
-                "3": 20,
-                "4": 119,
-                "5": 1664,
-                "6": 4796,
-                "7": 22199,
-                "8": 44246,
-                "9": 38099,
-                "10": 35744,
-                "11": 28268,
-                "12": 20511,
-                "13": 10586,
-                "14": 7159,
-                "15": 4712,
-                "16": 2811,
-                "17": 1652,
-                "18": 1085,
-                "19": 866,
-                "20": 367,
-                "21": 223,
-                "22": 134,
-                "23": 109,
-                "24": 48,
-                "25": 39,
-                "26": 17,
-                "27": 10,
-                "28": 4,
-                "29": 3,
-                "31": 2
-            };
-
-            const questionLengthTrace = {
-                x: Object.keys(questionLengthData),
-                y: Object.values(questionLengthData),
-                type: 'bar',
-                marker: {
-                    color: customColors[1]
-                }
-            };
-
-            Plotly.newPlot('questionLengthPlot', [questionLengthTrace], {
-                title: 'Question Length Distribution',
-                xaxis: {
-                    title: 'Question Length (words)',
-                    range: [2, 31]
-                },
-                yaxis: { title: 'Number of Questions' },
-                height: 450,
-                responsive: true,
-                autosize: true,
-                margin: { t: 60, b: 100, l: 80, r: 60 }
-            });
-
-            // Top 20 Correct Options
-            const correctOptionsData = {
-                'Two': 10540,
-                'Music': 5588,
-                'Three': 5156,
-                'Four': 3770,
-                'Twice': 3335,
-                'One': 3022,
-                'Once': 2956,
-                'Red': 2386,
-                'Blue': 1913,
-                'Three times': 1596,
-                'White': 1428,
-                'Five': 1368,
-                'Four times': 1302,
-                'Black': 1250,
-                'Male speech': 1203,
-                'Yellow': 1187,
-                'Speech': 1141,
-                'Green': 1129,
-                'To the left': 1087,
-                'Singing': 962
-            };
-
-            const correctOptionsTrace = {
-                x: Object.keys(correctOptionsData),
-                y: Object.values(correctOptionsData),
-                type: 'bar',
-                marker: {
-                    color: customColors[2]
-                }
-            };
-
-            Plotly.newPlot('correctOptionsPlot', [correctOptionsTrace], {
-                title: 'Top 20 Most Frequent Correct Answer Options',
-                xaxis: { title: 'Answer Option' },
-                yaxis: { title: 'Frequency' },
-                height: 450,
-                responsive: true,
-                autosize: true,
-                margin: { t: 60, b: 150, l: 80, r: 60 }
-            });
-
-            // Top 20 Non-stopwords
-            const nonStopwordsData = {
-                'video': 114802,
-                'sound': 64825,
-                'man': 37783,
-                'heard': 33978,
-                'accompanies': 21770,
-                'visible': 17348,
-                'located': 17095,
-                'movement': 16774,
-                'happens': 16635,
-                'times': 14378,
-                'doing': 14274,
-                'color': 13704,
-                's': 13309,
-                'does': 12952,
-                'background': 11671,
-                'relative': 10662,
-                'woman': 10187,
-                'position': 10181,
-                'event': 8664,
-                'person': 8174
-            };
-
-            const nonStopwordsTrace = {
-                x: Object.keys(nonStopwordsData),
-                y: Object.values(nonStopwordsData),
-                type: 'bar',
-                marker: {
-                    color: customColors[3]
-                }
-            };
-
-            Plotly.newPlot('nonStopwordsPlot', [nonStopwordsTrace], {
-                title: 'Top 20 Most Frequent Non-stopwords in Questions',
-                xaxis: { title: 'Word' },
-                yaxis: { title: 'Frequency' },
-                height: 450,
-                responsive: true,
-                autosize: true,
-                margin: { t: 60, b: 150, l: 80, r: 60 }
-            });
-
-            // Add window resize handler
-            window.addEventListener('resize', function () {
-                const plotIds = [
-                    'categoryBreakdownPlot',
-                    'modalityBreakdownPlot',
-                    'modalityCategoryHeatmap',
-                    'questionsPerVideoPlot',
-                    'questionLengthPlot',
-                    'correctOptionsPlot',
-                    'nonStopwordsPlot'
-                ];
-
-                plotIds.forEach(id => {
-                    Plotly.relayout(id, {
-                        'width': document.getElementById(id).offsetWidth
-                    });
-                });
-            });
-
-            // Interactive Visualizations
-            const interactiveVizSection = document.querySelector('h3:contains("Interactive Visualizations")');
-            if (interactiveVizSection) {
-                interactiveVizSection.insertAdjacentHTML('beforebegin', `
-                    <h3 class="text-xl font-semibold mb-4">Interactive Visualizations</h3>
-                `);
-            }
-        });
-    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        section[id] {
+            scroll-margin-top: 5rem;
+        }
+    </style>
+    <script src="script.js"></script>
 </head>
 
-<body class="bg-white text-black font-sans p-6">
-    <main class="max-w-7xl mx-auto space-y-10">
-        <section class="text-center">
-            <h1 class="text-3xl font-bold">Generative Audio-Visual Question Answering: A Novel Dataset and Model Using
-                LLMs</h1>
-            <div class="text-center">
-                <img src="valor32k.PNG" alt="Valor32k Overview" class="mx-auto"
-                    style="max-width: 200px; width: 100%; height: auto; margin-top: 20px;">
-            </div>
-            <p class="mt-2 text-gray-700">
-                May 14, 2025
-            </p>
-            <div class="mt-4 flex justify-center space-x-4">
-                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
-                    </svg>
-                    <span>Paper</span>
-                </button>
-                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
-                    <span>Code</span>
-                </button>
-                <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
-                    </svg>
-                    <span>Supplementary</span>
-                </button>
-            </div>
-        </section>
-
-
-        <section>
-            <h2 class="text-xl font-semibold mb-2">Abstract</h2>
-            <p class="text-gray-800">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus
-                ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent
-                mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
-            </p>
-        </section>
-
-        <section class="text-center">
-            <div class="border rounded p-6">
-                <div class="flex justify-center mb-4 space-x-4">
-                    <div class="w-16 h-16 bg-gray-300 rounded"></div>
-                    <div class="w-16 h-16 bg-gray-300 rounded"></div>
+<body class="bg-white text-black font-sans">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#home" class="text-xl font-bold text-gray-800">Valor32k-AVQA-2</a>
                 </div>
-                <div class="w-48 h-24 bg-gray-300 mx-auto rounded"></div>
-                <p class="mt-2 text-gray-600">Image</p>
+                <div class="flex items-center space-x-8">
+                    <a href="#abstract" class="nav-link text-gray-600 hover:text-gray-900">Abstract</a>
+                    <a href="#dataset" class="nav-link text-gray-600 hover:text-gray-900">Dataset</a>
+                    <a href="#statistics" class="nav-link text-gray-600 hover:text-gray-900">Statistics</a>
+                    <!-- <a href="#visualizations" class="nav-link text-gray-600 hover:text-gray-900">Visualizations</a> -->
+                    <a href="#download" class="nav-link text-gray-600 hover:text-gray-900">Download</a>
+                    <a href="#bibtex" class="nav-link text-gray-600 hover:text-gray-900">BibTeX</a>
+                </div>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <section class="space-y-6">
-            <h2 class="text-2xl font-bold text-center">Valor32k-GPT4 Dataset</h2>
-
-            <div class="bg-gray-50 p-6 rounded-lg">
-                <h3 class="text-xl font-semibold mb-4">Dataset Description</h3>
-                <p class="text-gray-700">
-                    Valor32k-GPT4 is a comprehensive audio-visual question answering dataset containing 32,000 carefully
-                    curated examples. Each example consists of a video clip, detailed captions, and multiple-choice
-                    questions with rephrased answers. The dataset covers various categories and includes questions that
-                    can be answered through visual, audio, or audio-visual modalities.
+    <!-- Add padding to account for fixed navbar -->
+    <div class="pt-16">
+        <main class="max-w-7xl mx-auto space-y-10 p-6">
+            <section id="home" class="text-center">
+                <h1 class="text-3xl font-bold">Generative Audio-Visual Question Answering: A Novel Dataset and Model Using
+                    LLMs</h1>
+                <div class="text-center">
+                    <img src="valor32k.PNG" alt="Valor32k Overview" class="mx-auto"
+                        style="max-width: 200px; width: 100%; height: auto; margin-top: 20px;">
+                </div>
+                <p class="mt-2 text-gray-700">
+                    May 14, 2025
                 </p>
-            </div>
-            <div class="col-span-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <h3 class="text-xl font-semibold col-span-full mb-4">Example Samples from the Dataset</h3>
-                <!-- Video 1 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700">Video ID: Sv9fcuRfk2o</span>
-                        <span class="text-sm text-gray-500">Segment: 01:10 - 01:20</span>
-                    </div>
-                    <video class="w-full aspect-video rounded mb-2" controls>
-                        <source src="video_samples/Sv9fcuRfk2o_70.000_80.000.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="h-12 flex items-center mb-2">
-                        <p class="text-sm text-gray-600 leading-6">With the sound of the horn, two men happily take
-                            drinks on the road while talking.</p>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What is the man in the gray shirt holding in his right
-                                    hand?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Description</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">A book</p>
-                                <p class="text-sm">A bag</p>
-                                <p class="text-sm">A drink (✓)</p>
-                                <p class="text-sm">A phone</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>A beverage</p>
-                                <p>A cup</p>
-                                <p>A drink</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What are the two men doing while walking on the road?
-                                </p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-purple-200 text-purple-900 text-xs rounded">Audio-Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Action</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">Talking and drinking (✓)</p>
-                                <p class="text-sm">Reading and walking</p>
-                                <p class="text-sm">Running and shouting</p>
-                                <p class="text-sm">Listening to music</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>Conversing and drinking</p>
-                                <p>Chatting and drinking</p>
-                                <p>Talking and sipping</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video 2 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700">Video ID: XzWs0UMTYB0</span>
-                        <span class="text-sm text-gray-500">Segment: 02:30 - 02:40</span>
-                    </div>
-                    <video class="w-full aspect-video rounded mb-2" controls>
-                        <source src="video_samples/XzWs0UMTYB0_150.000_160.000.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="h-12 flex items-center mb-2">
-                        <p class="text-sm text-gray-600 leading-6">As the water rang, a man in black was fishing by the
-                            river and then talking.</p>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What sound accompanies the man's action in the video?
-                                </p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Action</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">Birds chirping</p>
-                                <p class="text-sm">Wind blowing</p>
-                                <p class="text-sm">Car honking</p>
-                                <p class="text-sm">Speech (✓)</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>Talking</p>
-                                <p>Conversing</p>
-                                <p>Speaking</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">Where is the man located in the video?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Location</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">In a forest</p>
-                                <p class="text-sm">In a city park</p>
-                                <p class="text-sm">By the river (✓)</p>
-                                <p class="text-sm">On a mountain</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>Next to the river</p>
-                                <p>Beside the river</p>
-                                <p>At the riverbank</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video 3 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700">Video ID: _xdYMgoI2rY</span>
-                        <span class="text-sm text-gray-500">Segment: 00:30 - 00:40</span>
-                    </div>
-                    <video class="w-full aspect-video rounded mb-2" controls>
-                        <source src="video_samples/_xdYMgoI2rY_30.000_40.000.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="h-12 flex items-center mb-2">
-                        <p class="text-sm text-gray-600 leading-6">In the ranch, a man holds a horse and speaks.</p>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What happens after the man starts leading the horse?
-                                </p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-purple-200 text-purple-900 text-xs rounded">Audio-Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Temporal</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">The horse stops moving</p>
-                                <p class="text-sm">The horse neighs</p>
-                                <p class="text-sm">The horse snorts (✓)</p>
-                                <p class="text-sm">The horse starts running</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>The horse makes a snorting sound</p>
-                                <p>A snort is heard from the horse</p>
-                                <p>The horse emits a snort</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">How many horses are visible in the video?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1  bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Count</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">Two (✓)</p>
-                                <p class="text-sm">One</p>
-                                <p class="text-sm">Four</p>
-                                <p class="text-sm">Three</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>There are two horses</p>
-                                <p>Two horses are seen</p>
-                                <p>The video shows two horses</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video 4 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700">Video ID: -uGHAvfqs2I</span>
-                        <span class="text-sm text-gray-500">Segment: 00:30 - 00:40</span>
-                    </div>
-                    <video class="w-full aspect-video rounded mb-2" controls>
-                        <source src="video_samples/-uGHAvfqs2I_30.000_40.000.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="h-12 flex items-center mb-2">
-                        <p class="text-sm text-gray-600 leading-6">In the room, a cat whirled around the door, barking
-                            from time to time.</p>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">How many times does the cat meow in the video?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Count</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">Three times</p>
-                                <p class="text-sm">Twice (✓)</p>
-                                <p class="text-sm">Four times</p>
-                                <p class="text-sm">Once</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>The cat meows twice</p>
-                                <p>The cat makes two meowing sounds</p>
-                                <p>There are two meows from the cat</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What happens after the cat meows the second time?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-purple-200 text-purple-900 text-xs rounded">Audio-Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Temporal</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">The cat jumps</p>
-                                <p class="text-sm">The cat moves out of the frame (✓)</p>
-                                <p class="text-sm">The cat sits down</p>
-                                <p class="text-sm">The cat runs away</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>The cat leaves the frame</p>
-                                <p>The cat exits the frame</p>
-                                <p>The cat moves out of view</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video 5 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700">Video ID: 7qaQk_sxQwg</span>
-                        <span class="text-sm text-gray-500">Segment: 01:50 - 02:00</span>
-                    </div>
-                    <video class="w-full aspect-video rounded mb-2" controls>
-                        <source src="video_samples/7qaQk_sxQwg_110.000_120.000.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="h-12 flex items-center mb-2">
-                        <p class="text-sm text-gray-600 leading-6">Outside, a crowd of men around a star speaks this in
-                            English, making noisy people.</p>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What is the man in the white shirt doing while a shout
-                                    is heard?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Description</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">Looking down (✓)</p>
-                                <p class="text-sm">Talking</p>
-                                <p class="text-sm">Walking</p>
-                                <p class="text-sm">Waving</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>Gazing downward</p>
-                                <p>Facing down</p>
-                                <p>Head tilted down</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">Where is the man in the white shirt located in the
-                                    video?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Location</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">In the middle of the crowd (✓)</p>
-                                <p class="text-sm">Behind the crowd</p>
-                                <p class="text-sm">In front of the crowd</p>
-                                <p class="text-sm">At the edge of the crowd</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>Center of the crowd</p>
-                                <p>Crowd's middle</p>
-                                <p>Crowd's center</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video 6 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700">Video ID: 7kIhJzeWnJE</span>
-                        <span class="text-sm text-gray-500">Segment: 01:50 - 02:00</span>
-                    </div>
-                    <video class="w-full aspect-video rounded mb-2" controls>
-                        <source src="video_samples/7kIhJzeWnJE_110.000_120.000.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="h-12 flex items-center mb-2">
-                        <p class="text-sm text-gray-600 leading-6">In the dark, a lighted light shone on a plane's
-                            propeller, which was turning and buzzing.</p>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What is the position of the light relative to the
-                                    propeller in the video?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1  bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Relative
-                                    Position</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">To the left of the propeller</p>
-                                <p class="text-sm">Below the propeller</p>
-                                <p class="text-sm">Above the propeller (✓)</p>
-                                <p class="text-sm">To the right of the propeller</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>The light is situated above the propeller</p>
-                                <p>The light is located above the propeller</p>
-                                <p>The light is positioned above the propeller</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-3 rounded border">
-                            <div class="h-12 flex items-center">
-                                <p class="font-medium leading-6">What background sound is heard in the video?</p>
-                            </div>
-                            <div class="mt-2">
-                                <span
-                                    class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
-                                <span
-                                    class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Description</span>
-                            </div>
-                            <div class="mt-2 space-y-1">
-                                <p class="text-sm">Engine buzzing (✓)</p>
-                                <p class="text-sm">People talking</p>
-                                <p class="text-sm">Water flowing</p>
-                                <p class="text-sm">Birds chirping</p>
-                            </div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                <p>Engine humming</p>
-                                <p>Engine droning</p>
-                                <p>Engine noise</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-lg">
-                <h3 class="text-xl font-semibold mb-4">Dataset Statistics</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="text-lg font-medium text-gray-700">Unique Videos</h4>
-                        <p class="text-2xl font-bold text-blue-600">28,863</p>
-                        <div class="mt-2 text-sm text-gray-600">
-                            <div class="flex justify-between">
-                                <span>Train:</span>
-                                <span>22,456</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Val:</span>
-                                <span>2,942</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Test:</span>
-                                <span>3,465</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="text-lg font-medium text-gray-700">Total Questions</h4>
-                        <p class="text-2xl font-bold text-blue-600">225,495</p>
-                        <div class="mt-2 text-sm text-gray-600">
-                            <div class="flex justify-between">
-                                <span>Train:</span>
-                                <span>177,140</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Val:</span>
-                                <span>22,267</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Test:</span>
-                                <span>26,088</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="text-lg font-medium text-gray-700">Avg Questions/Video</h4>
-                        <p class="text-2xl font-bold text-blue-600">7.81</p>
-                        <div class="mt-2 text-sm text-gray-600">
-                            <div class="flex justify-between">
-                                <span>Train:</span>
-                                <span>7.89</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Val:</span>
-                                <span>7.57</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Test:</span>
-                                <span>7.53</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="text-lg font-medium text-gray-700">Unique Words</h4>
-                        <p class="text-2xl font-bold text-blue-600">22,639</p>
-                        <div class="mt-2 text-sm text-gray-600">
-                            <div class="flex justify-between">
-                                <span>Train:</span>
-                                <span>20,480</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Val:</span>
-                                <span>8,936</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Test:</span>
-                                <span>9,409</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="text-lg font-medium text-gray-700 mb-4">Category Breakdown</h4>
-                        <div class="space-y-2">
-                            <div class="flex justify-between">
-                                <span>Description</span>
-                                <span class="font-medium">62,666</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Action</span>
-                                <span class="font-medium">47,689</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Count</span>
-                                <span class="font-medium">41,897</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Temporal</span>
-                                <span class="font-medium">41,359</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Location</span>
-                                <span class="font-medium">19,245</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Relative Position</span>
-                                <span class="font-medium">12,600</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="text-lg font-medium text-gray-700 mb-4">Modality Breakdown</h4>
-                        <div class="space-y-2">
-                            <div class="flex justify-between">
-                                <span>Visual</span>
-                                <span class="font-medium">130,626</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Audio-Visual</span>
-                                <span class="font-medium">49,658</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Audio</span>
-                                <span class="font-medium">45,189</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-lg shadow mb-6">
-                    <h4 class="text-lg font-medium text-gray-700 mb-4">Question Length Statistics</h4>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <h5 class="text-sm text-gray-500">Average</h5>
-                            <p class="text-xl font-bold">9.95</p>
-                        </div>
-                        <div>
-                            <h5 class="text-sm text-gray-500">Minimum</h5>
-                            <p class="text-xl font-bold">2</p>
-                        </div>
-                        <div>
-                            <h5 class="text-sm text-gray-500">Maximum</h5>
-                            <p class="text-xl font-bold">31</p>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="text-xl font-semibold mb-4">Interactive Visualizations</h3>
-                <div class="grid grid-cols-1 gap-6">
-                    <div id="categoryBreakdownPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
-                    <div id="modalityBreakdownPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
-                    <div id="modalityCategoryHeatmap" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
-                    <div id="questionsPerVideoPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
-                    <div id="questionLengthPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
-                    <div id="correctOptionsPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
-                    <div id="nonStopwordsPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
-                </div>
-            </div>
-
-            <div class="bg-gray-50 p-6 rounded-lg">
-                <h3 class="text-xl font-semibold mb-4">Download Dataset</h3>
-                <div class="space-y-4">
-                    <div class="flex items-center space-x-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                <div class="mt-4 flex justify-center space-x-4">
+                    <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
                         </svg>
-                        <a href="https://pan.baidu.com/s/1aHWCwUOX1lJi0lSsmJb6Tw?pwd=e3ve" target="_blank"
-                            class="text-blue-600 hover:text-blue-800 underline">Download Videos</a>
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        <span>Paper</span>
+                    </button>
+                    <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
-                        <a href="#" class="text-blue-600 hover:text-blue-800 underline">Download Annotations
-                            (ZIP)</a>
+                        <span>Code</span>
+                    </button>
+                    <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Supplementary</span>
+                    </button>
+                </div>
+            </section>
+
+            <section id="abstract">
+                <h2 class="text-xl font-semibold mb-2">Abstract</h2>
+                <p class="text-gray-800">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus
+                    ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent
+                    mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
+                </p>
+            </section>
+
+            <section class="text-center">
+                <div class="border rounded p-6">
+                    <div class="flex justify-center mb-4 space-x-4">
+                        <div class="w-16 h-16 bg-gray-300 rounded"></div>
+                        <div class="w-16 h-16 bg-gray-300 rounded"></div>
+                    </div>
+                    <div class="w-48 h-24 bg-gray-300 mx-auto rounded"></div>
+                    <p class="mt-2 text-gray-600">Image</p>
+                </div>
+            </section>
+
+            <section id="dataset" class="space-y-6">
+                <h2 class="text-2xl font-bold text-center">Valor32k-GPT4 Dataset</h2>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">Dataset Description</h3>
+                    <p class="text-gray-700">
+                        Valor32k-GPT4 is a comprehensive audio-visual question answering dataset containing 32,000 carefully
+                        curated examples. Each example consists of a video clip, detailed captions, and multiple-choice
+                        questions with rephrased answers. The dataset covers various categories and includes questions that
+                        can be answered through visual, audio, or audio-visual modalities.
+                    </p>
+                </div>
+                <div class="col-span-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <h3 class="text-xl font-semibold col-span-full mb-4">Example Samples from the Dataset</h3>
+                    <!-- Video 1 -->
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Video ID: Sv9fcuRfk2o</span>
+                            <span class="text-sm text-gray-500">Segment: 01:10 - 01:20</span>
+                        </div>
+                        <video class="w-full aspect-video rounded mb-2" controls>
+                            <source src="video_samples/Sv9fcuRfk2o_70.000_80.000.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="h-12 flex items-center mb-2">
+                            <p class="text-sm text-gray-600 leading-6">With the sound of the horn, two men happily take
+                                drinks on the road while talking.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What is the man in the gray shirt holding in his right
+                                        hand?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Description</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">A book</p>
+                                    <p class="text-sm">A bag</p>
+                                    <p class="text-sm">A drink (✓)</p>
+                                    <p class="text-sm">A phone</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>A beverage</p>
+                                    <p>A cup</p>
+                                    <p>A drink</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What are the two men doing while walking on the road?
+                                    </p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-purple-200 text-purple-900 text-xs rounded">Audio-Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Action</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">Talking and drinking (✓)</p>
+                                    <p class="text-sm">Reading and walking</p>
+                                    <p class="text-sm">Running and shouting</p>
+                                    <p class="text-sm">Listening to music</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>Conversing and drinking</p>
+                                    <p>Chatting and drinking</p>
+                                    <p>Talking and sipping</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Video ID: XzWs0UMTYB0</span>
+                            <span class="text-sm text-gray-500">Segment: 02:30 - 02:40</span>
+                        </div>
+                        <video class="w-full aspect-video rounded mb-2" controls>
+                            <source src="video_samples/XzWs0UMTYB0_150.000_160.000.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="h-12 flex items-center mb-2">
+                            <p class="text-sm text-gray-600 leading-6">As the water rang, a man in black was fishing by the
+                                river and then talking.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What sound accompanies the man's action in the video?
+                                    </p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Action</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">Birds chirping</p>
+                                    <p class="text-sm">Wind blowing</p>
+                                    <p class="text-sm">Car honking</p>
+                                    <p class="text-sm">Speech (✓)</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>Talking</p>
+                                    <p>Conversing</p>
+                                    <p>Speaking</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">Where is the man located in the video?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Location</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">In a forest</p>
+                                    <p class="text-sm">In a city park</p>
+                                    <p class="text-sm">By the river (✓)</p>
+                                    <p class="text-sm">On a mountain</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>Next to the river</p>
+                                    <p>Beside the river</p>
+                                    <p>At the riverbank</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 3 -->
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Video ID: _xdYMgoI2rY</span>
+                            <span class="text-sm text-gray-500">Segment: 00:30 - 00:40</span>
+                        </div>
+                        <video class="w-full aspect-video rounded mb-2" controls>
+                            <source src="video_samples/_xdYMgoI2rY_30.000_40.000.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="h-12 flex items-center mb-2">
+                            <p class="text-sm text-gray-600 leading-6">In the ranch, a man holds a horse and speaks.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What happens after the man starts leading the horse?
+                                    </p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-purple-200 text-purple-900 text-xs rounded">Audio-Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Temporal</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">The horse stops moving</p>
+                                    <p class="text-sm">The horse neighs</p>
+                                    <p class="text-sm">The horse snorts (✓)</p>
+                                    <p class="text-sm">The horse starts running</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>The horse makes a snorting sound</p>
+                                    <p>A snort is heard from the horse</p>
+                                    <p>The horse emits a snort</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">How many horses are visible in the video?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1  bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Count</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">Two (✓)</p>
+                                    <p class="text-sm">One</p>
+                                    <p class="text-sm">Four</p>
+                                    <p class="text-sm">Three</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>There are two horses</p>
+                                    <p>Two horses are seen</p>
+                                    <p>The video shows two horses</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 4 -->
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Video ID: -uGHAvfqs2I</span>
+                            <span class="text-sm text-gray-500">Segment: 00:30 - 00:40</span>
+                        </div>
+                        <video class="w-full aspect-video rounded mb-2" controls>
+                            <source src="video_samples/-uGHAvfqs2I_30.000_40.000.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="h-12 flex items-center mb-2">
+                            <p class="text-sm text-gray-600 leading-6">In the room, a cat whirled around the door, barking
+                                from time to time.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">How many times does the cat meow in the video?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Count</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">Three times</p>
+                                    <p class="text-sm">Twice (✓)</p>
+                                    <p class="text-sm">Four times</p>
+                                    <p class="text-sm">Once</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>The cat meows twice</p>
+                                    <p>The cat makes two meowing sounds</p>
+                                    <p>There are two meows from the cat</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What happens after the cat meows the second time?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-purple-200 text-purple-900 text-xs rounded">Audio-Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Temporal</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">The cat jumps</p>
+                                    <p class="text-sm">The cat moves out of the frame (✓)</p>
+                                    <p class="text-sm">The cat sits down</p>
+                                    <p class="text-sm">The cat runs away</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>The cat leaves the frame</p>
+                                    <p>The cat exits the frame</p>
+                                    <p>The cat moves out of view</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 5 -->
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Video ID: 7qaQk_sxQwg</span>
+                            <span class="text-sm text-gray-500">Segment: 01:50 - 02:00</span>
+                        </div>
+                        <video class="w-full aspect-video rounded mb-2" controls>
+                            <source src="video_samples/7qaQk_sxQwg_110.000_120.000.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="h-12 flex items-center mb-2">
+                            <p class="text-sm text-gray-600 leading-6">Outside, a crowd of men around a star speaks this in
+                                English, making noisy people.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What is the man in the white shirt doing while a shout
+                                        is heard?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Description</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">Looking down (✓)</p>
+                                    <p class="text-sm">Talking</p>
+                                    <p class="text-sm">Walking</p>
+                                    <p class="text-sm">Waving</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>Gazing downward</p>
+                                    <p>Facing down</p>
+                                    <p>Head tilted down</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">Where is the man in the white shirt located in the
+                                        video?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Location</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">In the middle of the crowd (✓)</p>
+                                    <p class="text-sm">Behind the crowd</p>
+                                    <p class="text-sm">In front of the crowd</p>
+                                    <p class="text-sm">At the edge of the crowd</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>Center of the crowd</p>
+                                    <p>Crowd's middle</p>
+                                    <p>Crowd's center</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 6 -->
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Video ID: 7kIhJzeWnJE</span>
+                            <span class="text-sm text-gray-500">Segment: 01:50 - 02:00</span>
+                        </div>
+                        <video class="w-full aspect-video rounded mb-2" controls>
+                            <source src="video_samples/7kIhJzeWnJE_110.000_120.000.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="h-12 flex items-center mb-2">
+                            <p class="text-sm text-gray-600 leading-6">In the dark, a lighted light shone on a plane's
+                                propeller, which was turning and buzzing.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What is the position of the light relative to the
+                                        propeller in the video?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1  bg-blue-200 text-blue-900 text-xs rounded">Visual</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Relative
+                                        Position</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">To the left of the propeller</p>
+                                    <p class="text-sm">Below the propeller</p>
+                                    <p class="text-sm">Above the propeller (✓)</p>
+                                    <p class="text-sm">To the right of the propeller</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>The light is situated above the propeller</p>
+                                    <p>The light is located above the propeller</p>
+                                    <p>The light is positioned above the propeller</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="h-12 flex items-center">
+                                    <p class="font-medium leading-6">What background sound is heard in the video?</p>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block px-2 py-1 bg-yellow-200 text-yellow-900 text-xs rounded">Audio</span>
+                                    <span
+                                        class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Description</span>
+                                </div>
+                                <div class="mt-2 space-y-1">
+                                    <p class="text-sm">Engine buzzing (✓)</p>
+                                    <p class="text-sm">People talking</p>
+                                    <p class="text-sm">Water flowing</p>
+                                    <p class="text-sm">Birds chirping</p>
+                                </div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p>Engine humming</p>
+                                    <p>Engine droning</p>
+                                    <p>Engine noise</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p class="mt-4 text-sm text-gray-600">
-                    Note: The dataset is provided for research purposes only. Please refer to our license terms for
-                    usage conditions.
-                </p>
-                <p class="mt-2 text-sm text-gray-600">
-                    Dataset source: <a href="https://github.com/TXH-mercury/VALOR?tab=readme-ov-file" target="_blank"
-                        class="text-blue-600 hover:text-blue-800">VALOR Repository</a>
-                </p>
-            </div>
-        </section>
+                <div class="bg-gray-50 p-6 rounded-lg" id="statistics">
+                    <h3 class="text-xl font-semibold mb-4">Dataset Statistics</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="text-lg font-medium text-gray-700">Unique Videos</h4>
+                            <p class="text-2xl font-bold text-blue-600">28,863</p>
+                            <div class="mt-2 text-sm text-gray-600">
+                                <div class="flex justify-between">
+                                    <span>Train:</span>
+                                    <span>22,456</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Val:</span>
+                                    <span>2,942</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Test:</span>
+                                    <span>3,465</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="text-lg font-medium text-gray-700">Total Questions</h4>
+                            <p class="text-2xl font-bold text-blue-600">225,495</p>
+                            <div class="mt-2 text-sm text-gray-600">
+                                <div class="flex justify-between">
+                                    <span>Train:</span>
+                                    <span>177,140</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Val:</span>
+                                    <span>22,267</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Test:</span>
+                                    <span>26,088</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="text-lg font-medium text-gray-700">Avg Questions/Video</h4>
+                            <p class="text-2xl font-bold text-blue-600">7.81</p>
+                            <div class="mt-2 text-sm text-gray-600">
+                                <div class="flex justify-between">
+                                    <span>Train:</span>
+                                    <span>7.89</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Val:</span>
+                                    <span>7.57</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Test:</span>
+                                    <span>7.53</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="text-lg font-medium text-gray-700">Unique Words</h4>
+                            <p class="text-2xl font-bold text-blue-600">22,639</p>
+                            <div class="mt-2 text-sm text-gray-600">
+                                <div class="flex justify-between">
+                                    <span>Train:</span>
+                                    <span>20,480</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Val:</span>
+                                    <span>8,936</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Test:</span>
+                                    <span>9,409</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <section>
-            <h2 class="text-xl font-semibold mb-2">BibTeX</h2>
-            <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="text-lg font-medium text-gray-700 mb-4">Category Breakdown</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>Description</span>
+                                    <span class="font-medium">62,666</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Action</span>
+                                    <span class="font-medium">47,689</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Count</span>
+                                    <span class="font-medium">41,897</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Temporal</span>
+                                    <span class="font-medium">41,359</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Location</span>
+                                    <span class="font-medium">19,245</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Relative Position</span>
+                                    <span class="font-medium">12,600</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="text-lg font-medium text-gray-700 mb-4">Modality Breakdown</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>Visual</span>
+                                    <span class="font-medium">130,626</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Audio-Visual</span>
+                                    <span class="font-medium">49,658</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Audio</span>
+                                    <span class="font-medium">45,189</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow mb-6">
+                        <h4 class="text-lg font-medium text-gray-700 mb-4">Question Length Statistics</h4>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <h5 class="text-sm text-gray-500">Average</h5>
+                                <p class="text-xl font-bold">9.95</p>
+                            </div>
+                            <div>
+                                <h5 class="text-sm text-gray-500">Minimum</h5>
+                                <p class="text-xl font-bold">2</p>
+                            </div>
+                            <div>
+                                <h5 class="text-sm text-gray-500">Maximum</h5>
+                                <p class="text-xl font-bold">31</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-4">Interactive Visualizations</h3>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div id="categoryBreakdownPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                        <div id="modalityBreakdownPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                        <div id="modalityCategoryHeatmap" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                        <div id="questionsPerVideoPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                        <div id="questionLengthPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                        <div id="correctOptionsPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                        <div id="nonStopwordsPlot" class="bg-white p-8 rounded-lg shadow overflow-hidden"></div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg" id="download">
+                    <h3 class="text-xl font-semibold mb-4">Download Dataset</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <a href="https://pan.baidu.com/s/1aHWCwUOX1lJi0lSsmJb6Tw?pwd=e3ve" target="_blank"
+                                class="text-blue-600 hover:text-blue-800 underline">Download Videos</a>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 underline">Download Annotations
+                                (ZIP)</a>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-600">
+                        Note: The dataset is provided for research purposes only. Please refer to our license terms for
+                        usage conditions.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-600">
+                        Dataset source: <a href="https://github.com/TXH-mercury/VALOR?tab=readme-ov-file" target="_blank"
+                            class="text-blue-600 hover:text-blue-800">VALOR Repository</a>
+                    </p>
+                </div>
+            </section>
+
+            <section id="bibtex">
+                <h2 class="text-xl font-semibold mb-2">BibTeX</h2>
+                <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
 @article{
   author = {Jon Doe, Jane Smith, Alice Johnson},
   title = {A Simple Paper Webpage},
   journal = {Journal of Example},
   year = {2024}
 }
-            </pre>
-        </section>
-    </main>
+                </pre>
+            </section>
+        </main>
+    </div>
 </body>
 
 </html>
