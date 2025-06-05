@@ -6,3 +6,4 @@
 /code/audioset/eval_segments.csv
 /code/audioset/mid_to_display_name.tsv
 /code/audioset/unbalanced_train_segments.csv
+/data/

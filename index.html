@@ -82,14 +82,16 @@
                         </svg>
                         <span>Paper</span>
                     </button>
-                    <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <a href="https://github.com/inesriahi/valor32k-avqa-2/tree/main/code" target="_blank" rel="noopener noreferrer">
+                        <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
-                                d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <span>Code</span>
-                    </button>
+                                  d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                                  clip-rule="evenodd" />
+                          </svg>
+                          <span>Code</span>
+                        </button>
+                      </a>
                     <!-- <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
@@ -1107,577 +1109,658 @@
 
                 <section class="mt-8">
                     <h2 class="text-2xl text-center font-bold col-span-full mb-4">Experiments</h2>
-                  
+
                     <!-- Table 1 -->
                     <div class="overflow-x-auto mb-2">
-                      <table class="min-w-full divide-y divide-gray-200 table-auto">
-                        <thead class="bg-gray-50">
-                          <tr>
-                            <th rowspan="2" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Model
-                            </th>
-                            <th rowspan="2" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Setup
-                            </th>
-                            <th colspan="7" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Overall Metrics
-                            </th>
-                            <th class="px-4 py-3"></th>
-                            <th colspan="3" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              CIDEr by Modality
-                            </th>
-                            <th class="px-4 py-3"></th>
-                            <th colspan="6" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              CIDEr by Category
-                            </th>
-                          </tr>
-                          <tr>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">BLEU-4</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">METEOR</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ROUGE-L</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">SPICE</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">BERT-F1</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Accuracy (%)</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">CIDEr</th>
-                  
-                            <th class="px-4 py-2"></th>
-                  
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Audio</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Visual</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Audio-Visual</th>
-                  
-                            <th class="px-4 py-2"></th>
-                  
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Temporal</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Rel.-Position</th>
-                          </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-700">
-                          <!-- VideoLLaMA2 w/o audio, O–S -->
-                          <tr>
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio</td>
-                            <td class="px-4 py-3">O–S</td>
-                            <td class="px-4 py-3 text-center">0.0738</td>
-                            <td class="px-4 py-3 text-center">0.1312</td>
-                            <td class="px-4 py-3 text-center">0.2138</td>
-                            <td class="px-4 py-3 text-center">0.1244</td>
-                            <td class="px-4 py-3 text-center">0.2205</td>
-                            <td class="px-4 py-3 text-center">37.70</td>
-                            <td class="px-4 py-3 text-center">0.3665</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.1909</td>
-                            <td class="px-4 py-3 text-center">0.4617</td>
-                            <td class="px-4 py-3 text-center">0.2516</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.4467</td>
-                            <td class="px-4 py-3 text-center">0.2697</td>
-                            <td class="px-4 py-3 text-center">0.2095</td>
-                            <td class="px-4 py-3 text-center">0.2576</td>
-                            <td class="px-4 py-3 text-center">0.5280</td>
-                            <td class="px-4 py-3 text-center">0.8769</td>
-                          </tr>
-                  
-                          <!-- VideoLLaMA2 w/o audio, FT -->
-                          <tr class="bg-gray-50">
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">0.1188</td>
-                            <td class="px-4 py-3 text-center">0.1425</td>
-                            <td class="px-4 py-3 text-center">0.3152</td>
-                            <td class="px-4 py-3 text-center">0.1434</td>
-                            <td class="px-4 py-3 text-center">0.2815</td>
-                            <td class="px-4 py-3 text-center">49.64</td>
-                            <td class="px-4 py-3 text-center">0.7463</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.4505</td>
-                            <td class="px-4 py-3 text-center">0.9096</td>
-                            <td class="px-4 py-3 text-center">0.5266</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.6808</td>
-                            <td class="px-4 py-3 text-center">0.5728</td>
-                            <td class="px-4 py-3 text-center">0.2775</td>
-                            <td class="px-4 py-3 text-center">0.7386</td>
-                            <td class="px-4 py-3 text-center">1.1141</td>
-                            <td class="px-4 py-3 text-center">2.1975</td>
-                          </tr>
-                  
-                          <!-- VideoLLaMA2 with audio, O–S -->
-                          <tr>
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio</td>
-                            <td class="px-4 py-3">O–S</td>
-                            <td class="px-4 py-3 text-center">0.0439</td>
-                            <td class="px-4 py-3 text-center">0.1207</td>
-                            <td class="px-4 py-3 text-center">0.1729</td>
-                            <td class="px-4 py-3 text-center">0.0974</td>
-                            <td class="px-4 py-3 text-center">0.1690</td>
-                            <td class="px-4 py-3 text-center">39.75</td>
-                            <td class="px-4 py-3 text-center">0.2558</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.1734</td>
-                            <td class="px-4 py-3 text-center">0.2975</td>
-                            <td class="px-4 py-3 text-center">0.2169</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.3204</td>
-                            <td class="px-4 py-3 text-center">0.2123</td>
-                            <td class="px-4 py-3 text-center">0.1648</td>
-                            <td class="px-4 py-3 text-center">0.2333</td>
-                            <td class="px-4 py-3 text-center">0.2073</td>
-                            <td class="px-4 py-3 text-center">0.4050</td>
-                          </tr>
-                  
-                          <!-- VideoLLaMA2 with audio, FT -->
-                          <tr class="bg-gray-50">
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">0.1254</td>
-                            <td class="px-4 py-3 text-center">0.1526</td>
-                            <td class="px-4 py-3 text-center">0.3368</td>
-                            <td class="px-4 py-3 text-center">0.1564</td>
-                            <td class="px-4 py-3 text-center">0.2977</td>
-                            <td class="px-4 py-3 text-center">53.86</td>
-                            <td class="px-4 py-3 text-center">0.8183</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.6134</td>
-                            <td class="px-4 py-3 text-center">0.9466</td>
-                            <td class="px-4 py-3 text-center">0.6175</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.7819</td>
-                            <td class="px-4 py-3 text-center">0.6670</td>
-                            <td class="px-4 py-3 text-center">0.2904</td>
-                            <td class="px-4 py-3 text-center">0.8122</td>
-                            <td class="px-4 py-3 text-center">1.2046</td>
-                            <td class="px-4 py-3 text-center">2.1923</td>
-                          </tr>
-                  
-                          <!-- Crab w/o audio, FT -->
-                          <tr>
-                            <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">w/o audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">0.0701</td>
-                            <td class="px-4 py-3 text-center">0.1231</td>
-                            <td class="px-4 py-3 text-center">0.2329</td>
-                            <td class="px-4 py-3 text-center">0.1287</td>
-                            <td class="px-4 py-3 text-center">0.2769</td>
-                            <td class="px-4 py-3 text-center">41.31</td>
-                            <td class="px-4 py-3 text-center">0.4259</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.2001</td>
-                            <td class="px-4 py-3 text-center">0.5348</td>
-                            <td class="px-4 py-3 text-center">0.3152</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.3216</td>
-                            <td class="px-4 py-3 text-center">0.3306</td>
-                            <td class="px-4 py-3 text-center">0.1352</td>
-                            <td class="px-4 py-3 text-center">0.4564</td>
-                            <td class="px-4 py-3 text-center">0.7658</td>
-                            <td class="px-4 py-3 text-center">1.5613</td>
-                          </tr>
-                  
-                          <!-- Crab with audio, FT -->
-                          <tr class="bg-gray-50">
-                            <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">with audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">0.0710</td>
-                            <td class="px-4 py-3 text-center">0.1270</td>
-                            <td class="px-4 py-3 text-center">0.2392</td>
-                            <td class="px-4 py-3 text-center">0.1340</td>
-                            <td class="px-4 py-3 text-center">0.2837</td>
-                            <td class="px-4 py-3 text-center">44.37</td>
-                            <td class="px-4 py-3 text-center">0.4401</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.2454</td>
-                            <td class="px-4 py-3 text-center">0.5336</td>
-                            <td class="px-4 py-3 text-center">0.3518</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">0.3365</td>
-                            <td class="px-4 py-3 text-center">0.3507</td>
-                            <td class="px-4 py-3 text-center">0.1454</td>
-                            <td class="px-4 py-3 text-center">0.4665</td>
-                            <td class="px-4 py-3 text-center">0.7136</td>
-                            <td class="px-4 py-3 text-center">1.6741</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                        <table class="min-w-full divide-y divide-gray-200 table-auto">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th rowspan="2"
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Model
+                                    </th>
+                                    <th rowspan="2"
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Setup
+                                    </th>
+                                    <th colspan="7"
+                                        class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Overall Metrics
+                                    </th>
+                                    <th class="px-4 py-3"></th>
+                                    <th colspan="3"
+                                        class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        CIDEr by Modality
+                                    </th>
+                                    <th class="px-4 py-3"></th>
+                                    <th colspan="6"
+                                        class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        CIDEr by Category
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        BLEU-4</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        METEOR</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        ROUGE-L</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        SPICE</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        BERT-F1</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Accuracy (%)</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        CIDEr</th>
+
+                                    <th class="px-4 py-2"></th>
+
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Audio</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Visual</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Audio-Visual</th>
+
+                                    <th class="px-4 py-2"></th>
+
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Description</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Action</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Count</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Temporal</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Location</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Rel.-Position</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-700">
+                                <!-- VideoLLaMA2 w/o audio, O–S -->
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio
+                                    </td>
+                                    <td class="px-4 py-3">O–S</td>
+                                    <td class="px-4 py-3 text-center">0.0738</td>
+                                    <td class="px-4 py-3 text-center">0.1312</td>
+                                    <td class="px-4 py-3 text-center">0.2138</td>
+                                    <td class="px-4 py-3 text-center">0.1244</td>
+                                    <td class="px-4 py-3 text-center">0.2205</td>
+                                    <td class="px-4 py-3 text-center">37.70</td>
+                                    <td class="px-4 py-3 text-center">0.3665</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.1909</td>
+                                    <td class="px-4 py-3 text-center">0.4617</td>
+                                    <td class="px-4 py-3 text-center">0.2516</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.4467</td>
+                                    <td class="px-4 py-3 text-center">0.2697</td>
+                                    <td class="px-4 py-3 text-center">0.2095</td>
+                                    <td class="px-4 py-3 text-center">0.2576</td>
+                                    <td class="px-4 py-3 text-center">0.5280</td>
+                                    <td class="px-4 py-3 text-center">0.8769</td>
+                                </tr>
+
+                                <!-- VideoLLaMA2 w/o audio, FT -->
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio
+                                    </td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">0.1188</td>
+                                    <td class="px-4 py-3 text-center">0.1425</td>
+                                    <td class="px-4 py-3 text-center">0.3152</td>
+                                    <td class="px-4 py-3 text-center">0.1434</td>
+                                    <td class="px-4 py-3 text-center">0.2815</td>
+                                    <td class="px-4 py-3 text-center">49.64</td>
+                                    <td class="px-4 py-3 text-center">0.7463</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.4505</td>
+                                    <td class="px-4 py-3 text-center">0.9096</td>
+                                    <td class="px-4 py-3 text-center">0.5266</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.6808</td>
+                                    <td class="px-4 py-3 text-center">0.5728</td>
+                                    <td class="px-4 py-3 text-center">0.2775</td>
+                                    <td class="px-4 py-3 text-center">0.7386</td>
+                                    <td class="px-4 py-3 text-center">1.1141</td>
+                                    <td class="px-4 py-3 text-center">2.1975</td>
+                                </tr>
+
+                                <!-- VideoLLaMA2 with audio, O–S -->
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio
+                                    </td>
+                                    <td class="px-4 py-3">O–S</td>
+                                    <td class="px-4 py-3 text-center">0.0439</td>
+                                    <td class="px-4 py-3 text-center">0.1207</td>
+                                    <td class="px-4 py-3 text-center">0.1729</td>
+                                    <td class="px-4 py-3 text-center">0.0974</td>
+                                    <td class="px-4 py-3 text-center">0.1690</td>
+                                    <td class="px-4 py-3 text-center">39.75</td>
+                                    <td class="px-4 py-3 text-center">0.2558</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.1734</td>
+                                    <td class="px-4 py-3 text-center">0.2975</td>
+                                    <td class="px-4 py-3 text-center">0.2169</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.3204</td>
+                                    <td class="px-4 py-3 text-center">0.2123</td>
+                                    <td class="px-4 py-3 text-center">0.1648</td>
+                                    <td class="px-4 py-3 text-center">0.2333</td>
+                                    <td class="px-4 py-3 text-center">0.2073</td>
+                                    <td class="px-4 py-3 text-center">0.4050</td>
+                                </tr>
+
+                                <!-- VideoLLaMA2 with audio, FT -->
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio
+                                    </td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">0.1254</td>
+                                    <td class="px-4 py-3 text-center">0.1526</td>
+                                    <td class="px-4 py-3 text-center">0.3368</td>
+                                    <td class="px-4 py-3 text-center">0.1564</td>
+                                    <td class="px-4 py-3 text-center">0.2977</td>
+                                    <td class="px-4 py-3 text-center">53.86</td>
+                                    <td class="px-4 py-3 text-center">0.8183</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.6134</td>
+                                    <td class="px-4 py-3 text-center">0.9466</td>
+                                    <td class="px-4 py-3 text-center">0.6175</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.7819</td>
+                                    <td class="px-4 py-3 text-center">0.6670</td>
+                                    <td class="px-4 py-3 text-center">0.2904</td>
+                                    <td class="px-4 py-3 text-center">0.8122</td>
+                                    <td class="px-4 py-3 text-center">1.2046</td>
+                                    <td class="px-4 py-3 text-center">2.1923</td>
+                                </tr>
+
+                                <!-- Crab w/o audio, FT -->
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">w/o audio</td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">0.0701</td>
+                                    <td class="px-4 py-3 text-center">0.1231</td>
+                                    <td class="px-4 py-3 text-center">0.2329</td>
+                                    <td class="px-4 py-3 text-center">0.1287</td>
+                                    <td class="px-4 py-3 text-center">0.2769</td>
+                                    <td class="px-4 py-3 text-center">41.31</td>
+                                    <td class="px-4 py-3 text-center">0.4259</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.2001</td>
+                                    <td class="px-4 py-3 text-center">0.5348</td>
+                                    <td class="px-4 py-3 text-center">0.3152</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.3216</td>
+                                    <td class="px-4 py-3 text-center">0.3306</td>
+                                    <td class="px-4 py-3 text-center">0.1352</td>
+                                    <td class="px-4 py-3 text-center">0.4564</td>
+                                    <td class="px-4 py-3 text-center">0.7658</td>
+                                    <td class="px-4 py-3 text-center">1.5613</td>
+                                </tr>
+
+                                <!-- Crab with audio, FT -->
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">with audio</td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">0.0710</td>
+                                    <td class="px-4 py-3 text-center">0.1270</td>
+                                    <td class="px-4 py-3 text-center">0.2392</td>
+                                    <td class="px-4 py-3 text-center">0.1340</td>
+                                    <td class="px-4 py-3 text-center">0.2837</td>
+                                    <td class="px-4 py-3 text-center">44.37</td>
+                                    <td class="px-4 py-3 text-center">0.4401</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.2454</td>
+                                    <td class="px-4 py-3 text-center">0.5336</td>
+                                    <td class="px-4 py-3 text-center">0.3518</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">0.3365</td>
+                                    <td class="px-4 py-3 text-center">0.3507</td>
+                                    <td class="px-4 py-3 text-center">0.1454</td>
+                                    <td class="px-4 py-3 text-center">0.4665</td>
+                                    <td class="px-4 py-3 text-center">0.7136</td>
+                                    <td class="px-4 py-3 text-center">1.6741</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <p class="mt-1 text-sm italic text-gray-600">
-                      Table 1: Selected evaluation metrics for two LMMs in zero-shot (O–S) and fine-tuning (FT) setups without and with audio input. *Extra models (e.g. VAST) are under testing.
+                        Table 1: Selected evaluation metrics for two LMMs in zero-shot (O–S) and fine-tuning (FT) setups
+                        without and with audio input. *Extra models (e.g. VAST) are under testing.
                     </p>
-                  
+
                     <!-- Table 2 -->
                     <div class="overflow-x-auto mt-8">
-                      <table class="min-w-full divide-y divide-gray-200 table-auto">
-                        <thead class="bg-gray-50">
-                          <tr>
-                            <th rowspan="2" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Model
-                            </th>
-                            <th rowspan="2" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Setup
-                            </th>
-                            <th colspan="3" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Accuracy by Modality (%)
-                            </th>
-                            <th class="px-4 py-3"></th>
-                            <th colspan="6" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Accuracy by Category (%)
-                            </th>
-                            <th rowspan="2" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Overall (%)
-                            </th>
-                          </tr>
-                          <tr>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Audio</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Visual</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Audio–Visual</th>
-                  
-                            <th class="px-4 py-2"></th>
-                  
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Temporal</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Rel.-Position</th>
-                          </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-700">
-                          <!-- VideoLLaMA2 w/o audio, O–S -->
-                          <tr>
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio</td>
-                            <td class="px-4 py-3">O–S</td>
-                            <td class="px-4 py-3 text-center">45.94</td>
-                            <td class="px-4 py-3 text-center">56.75</td>
-                            <td class="px-4 py-3 text-center">55.66</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">62.39</td>
-                            <td class="px-4 py-3 text-center">58.59</td>
-                            <td class="px-4 py-3 text-center">36.12</td>
-                            <td class="px-4 py-3 text-center">53.74</td>
-                            <td class="px-4 py-3 text-center">63.38</td>
-                            <td class="px-4 py-3 text-center">45.38</td>
-                  
-                            <td class="px-4 py-3 text-center">54.46</td>
-                          </tr>
-                  
-                          <!-- VideoLLaMA2 w/o audio, FT -->
-                          <tr class="bg-gray-50">
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">63.09</td>
-                            <td class="px-4 py-3 text-center">65.77</td>
-                            <td class="px-4 py-3 text-center">69.53</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">71.17</td>
-                            <td class="px-4 py-3 text-center">70.55</td>
-                            <td class="px-4 py-3 text-center">52.74</td>
-                            <td class="px-4 py-3 text-center">66.03</td>
-                            <td class="px-4 py-3 text-center">70.56</td>
-                            <td class="px-4 py-3 text-center">58.40</td>
-                  
-                            <td class="px-4 py-3 text-center">66.06</td>
-                          </tr>
-                  
-                          <!-- VideoLLaMA2 with audio, O–S -->
-                          <tr>
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio</td>
-                            <td class="px-4 py-3">O–S</td>
-                            <td class="px-4 py-3 text-center">57.12</td>
-                            <td class="px-4 py-3 text-center">57.05</td>
-                            <td class="px-4 py-3 text-center">64.28</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">68.88</td>
-                            <td class="px-4 py-3 text-center">66.95</td>
-                            <td class="px-4 py-3 text-center">36.66</td>
-                            <td class="px-4 py-3 text-center">56.86</td>
-                            <td class="px-4 py-3 text-center">62.77</td>
-                            <td class="px-4 py-3 text-center">43.14</td>
-                  
-                            <td class="px-4 py-3 text-center">58.58</td>
-                          </tr>
-                  
-                          <!-- VideoLLaMA2 with audio, FT -->
-                          <tr class="bg-gray-50">
-                            <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">67.52</td>
-                            <td class="px-4 py-3 text-center">64.95</td>
-                            <td class="px-4 py-3 text-center">71.41</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">73.33</td>
-                            <td class="px-4 py-3 text-center">74.12</td>
-                            <td class="px-4 py-3 text-center">55.35</td>
-                            <td class="px-4 py-3 text-center">62.63</td>
-                            <td class="px-4 py-3 text-center">68.79</td>
-                            <td class="px-4 py-3 text-center">52.23</td>
-                  
-                            <td class="px-4 py-3 text-center">66.80</td>
-                          </tr>
-                  
-                          <!-- Crab w/o audio, FT -->
-                          <tr>
-                            <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">w/o audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">28.05</td>
-                            <td class="px-4 py-3 text-center">29.41</td>
-                            <td class="px-4 py-3 text-center">30.64</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">27.69</td>
-                            <td class="px-4 py-3 text-center">31.48</td>
-                            <td class="px-4 py-3 text-center">24.82</td>
-                            <td class="px-4 py-3 text-center">33.44</td>
-                            <td class="px-4 py-3 text-center">31.54</td>
-                            <td class="px-4 py-3 text-center">28.06</td>
-                  
-                            <td class="px-4 py-3 text-center">29.42</td>
-                          </tr>
-                  
-                          <!-- Crab with audio, FT -->
-                          <tr class="bg-gray-50">
-                            <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">with audio</td>
-                            <td class="px-4 py-3">FT</td>
-                            <td class="px-4 py-3 text-center">39.04</td>
-                            <td class="px-4 py-3 text-center">37.46</td>
-                            <td class="px-4 py-3 text-center">44.41</td>
-                  
-                            <td class="px-4 py-3"></td>
-                  
-                            <td class="px-4 py-3 text-center">38.86</td>
-                            <td class="px-4 py-3 text-center">44.53</td>
-                            <td class="px-4 py-3 text-center">28.56</td>
-                            <td class="px-4 py-3 text-center">44.59</td>
-                            <td class="px-4 py-3 text-center">39.09</td>
-                            <td class="px-4 py-3 text-center">36.08</td>
-                  
-                            <td class="px-4 py-3 text-center">39.23</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                        <table class="min-w-full divide-y divide-gray-200 table-auto">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th rowspan="2"
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Model
+                                    </th>
+                                    <th rowspan="2"
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Setup
+                                    </th>
+                                    <th colspan="3"
+                                        class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Accuracy by Modality (%)
+                                    </th>
+                                    <th class="px-4 py-3"></th>
+                                    <th colspan="6"
+                                        class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Accuracy by Category (%)
+                                    </th>
+                                    <th rowspan="2"
+                                        class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Overall (%)
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Audio</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Visual</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Audio–Visual</th>
+
+                                    <th class="px-4 py-2"></th>
+
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Description</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Action</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Count</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Temporal</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Location</th>
+                                    <th
+                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Rel.-Position</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-700">
+                                <!-- VideoLLaMA2 w/o audio, O–S -->
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio
+                                    </td>
+                                    <td class="px-4 py-3">O–S</td>
+                                    <td class="px-4 py-3 text-center">45.94</td>
+                                    <td class="px-4 py-3 text-center">56.75</td>
+                                    <td class="px-4 py-3 text-center">55.66</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">62.39</td>
+                                    <td class="px-4 py-3 text-center">58.59</td>
+                                    <td class="px-4 py-3 text-center">36.12</td>
+                                    <td class="px-4 py-3 text-center">53.74</td>
+                                    <td class="px-4 py-3 text-center">63.38</td>
+                                    <td class="px-4 py-3 text-center">45.38</td>
+
+                                    <td class="px-4 py-3 text-center">54.46</td>
+                                </tr>
+
+                                <!-- VideoLLaMA2 w/o audio, FT -->
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">w/o audio
+                                    </td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">63.09</td>
+                                    <td class="px-4 py-3 text-center">65.77</td>
+                                    <td class="px-4 py-3 text-center">69.53</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">71.17</td>
+                                    <td class="px-4 py-3 text-center">70.55</td>
+                                    <td class="px-4 py-3 text-center">52.74</td>
+                                    <td class="px-4 py-3 text-center">66.03</td>
+                                    <td class="px-4 py-3 text-center">70.56</td>
+                                    <td class="px-4 py-3 text-center">58.40</td>
+
+                                    <td class="px-4 py-3 text-center">66.06</td>
+                                </tr>
+
+                                <!-- VideoLLaMA2 with audio, O–S -->
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio
+                                    </td>
+                                    <td class="px-4 py-3">O–S</td>
+                                    <td class="px-4 py-3 text-center">57.12</td>
+                                    <td class="px-4 py-3 text-center">57.05</td>
+                                    <td class="px-4 py-3 text-center">64.28</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">68.88</td>
+                                    <td class="px-4 py-3 text-center">66.95</td>
+                                    <td class="px-4 py-3 text-center">36.66</td>
+                                    <td class="px-4 py-3 text-center">56.86</td>
+                                    <td class="px-4 py-3 text-center">62.77</td>
+                                    <td class="px-4 py-3 text-center">43.14</td>
+
+                                    <td class="px-4 py-3 text-center">58.58</td>
+                                </tr>
+
+                                <!-- VideoLLaMA2 with audio, FT -->
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">VideoLLaMA2<br class="hidden sm:block">with audio
+                                    </td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">67.52</td>
+                                    <td class="px-4 py-3 text-center">64.95</td>
+                                    <td class="px-4 py-3 text-center">71.41</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">73.33</td>
+                                    <td class="px-4 py-3 text-center">74.12</td>
+                                    <td class="px-4 py-3 text-center">55.35</td>
+                                    <td class="px-4 py-3 text-center">62.63</td>
+                                    <td class="px-4 py-3 text-center">68.79</td>
+                                    <td class="px-4 py-3 text-center">52.23</td>
+
+                                    <td class="px-4 py-3 text-center">66.80</td>
+                                </tr>
+
+                                <!-- Crab w/o audio, FT -->
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">w/o audio</td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">28.05</td>
+                                    <td class="px-4 py-3 text-center">29.41</td>
+                                    <td class="px-4 py-3 text-center">30.64</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">27.69</td>
+                                    <td class="px-4 py-3 text-center">31.48</td>
+                                    <td class="px-4 py-3 text-center">24.82</td>
+                                    <td class="px-4 py-3 text-center">33.44</td>
+                                    <td class="px-4 py-3 text-center">31.54</td>
+                                    <td class="px-4 py-3 text-center">28.06</td>
+
+                                    <td class="px-4 py-3 text-center">29.42</td>
+                                </tr>
+
+                                <!-- Crab with audio, FT -->
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">Crab<br class="hidden sm:block">with audio</td>
+                                    <td class="px-4 py-3">FT</td>
+                                    <td class="px-4 py-3 text-center">39.04</td>
+                                    <td class="px-4 py-3 text-center">37.46</td>
+                                    <td class="px-4 py-3 text-center">44.41</td>
+
+                                    <td class="px-4 py-3"></td>
+
+                                    <td class="px-4 py-3 text-center">38.86</td>
+                                    <td class="px-4 py-3 text-center">44.53</td>
+                                    <td class="px-4 py-3 text-center">28.56</td>
+                                    <td class="px-4 py-3 text-center">44.59</td>
+                                    <td class="px-4 py-3 text-center">39.09</td>
+                                    <td class="px-4 py-3 text-center">36.08</td>
+
+                                    <td class="px-4 py-3 text-center">39.23</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <p class="mt-1 text-sm italic text-gray-600">
-                      Table 2: Multiple choice question (MCQ) accuracy for each model and setup, broken down by modality, category, and overall.
+                        Table 2: Multiple choice question (MCQ) accuracy for each model and setup, broken down by
+                        modality, category, and overall.
                     </p>
-                  </section>
-                  
+                </section>
 
-<!-- ===========================
+
+                <!-- ===========================
      Download & Dataset Details
 =========================== -->
-<div class="bg-gray-50 p-6 rounded-lg" id="download">
-    <h3 class="text-2xl text-center font-bold col-span-full mb-4">Download Dataset</h3>
-    <div class="space-y-6">
-      <!-- Combined Dataset (Flattened) -->
-      <div class="space-y-4">
-        <div class="flex items-center space-x-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          <span class="font-medium text-gray-800">Combined Dataset (Flattened)</span>
-        </div>
-        <div class="pl-10 space-y-2">
-          <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 4v16m8-8H4" />
-            </svg>
-            <a href="LINK_COMBINED_TRAIN_FLATTENED_JSON" target="_blank" class="text-blue-600 hover:text-blue-800 underline">combined_dataset_train_flattened.json</a>
-          </div>
-          <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 4v16m8-8H4" />
-            </svg>
-            <a href="LINK_COMBINED_VAL_FLATTENED_JSON" target="_blank" class="text-blue-600 hover:text-blue-800 underline">combined_dataset_val_flattened.json</a>
-          </div>
-          <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 4v16m8-8H4" />
-            </svg>
-            <a href="LINK_COMBINED_TEST_FLATTENED_JSON" target="_blank" class="text-blue-600 hover:text-blue-800 underline">combined_dataset_test_flattened.json</a>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Combined Dataset (Unflattened) -->
-      <div class="space-y-4">
-        <div class="flex items-center space-x-4 mt-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          <span class="font-medium text-gray-800">Combined Dataset (Unflattened)</span>
-        </div>
-        <div class="pl-10 space-y-2">
-          <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 4v16m8-8H4" />
-            </svg>
-            <a href="LINK_COMBINED_TRAIN_JSON" target="_blank" class="text-blue-600 hover:text-blue-800 underline">combined_dataset_train.json</a>
-          </div>
-          <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 4v16m8-8H4" />
-            </svg>
-            <a href="LINK_COMBINED_VAL_JSON" target="_blank" class="text-blue-600 hover:text-blue-800 underline">combined_dataset_val.json</a>
-          </div>
-          <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 4v16m8-8H4" />
-            </svg>
-            <a href="LINK_COMBINED_TEST_JSON" target="_blank" class="text-blue-600 hover:text-blue-800 underline">combined_dataset_test.json</a>
-          </div>
-        </div>
-      </div>
-  
-      <!-- AudioSet Files (Base) -->
-      <div class="space-y-4 mt-6">
-        <div class="flex items-center space-x-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M5 13l4 4L19 7" />
-          </svg>
-          <span class="font-medium text-gray-800">AudioSet (Base) Files</span>
-        </div>
-        <div class="pl-10 text-gray-700">
-          Download the following CSVs from the <a href="https://research.google.com/audioset/download.html" target="_blank" class="text-blue-600 hover:text-blue-800 underline">AudioSet download page</a>:
-          <ul class="list-disc list-inside mt-2">
-            <li>eval_segments.csv</li>
-            <li>balanced_train_segments.csv</li>
-            <li>unbalanced_train_segments.csv</li>
-            <li>class_labels_indices.csv</li>
-          </ul>
-        </div>
-      </div>
-  
-      <!-- AudioSet Files (Strong Labels) -->
-      <div class="space-y-4 mt-6">
-        <div class="flex items-center space-x-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M5 13l4 4L19 7" />
-          </svg>
-          <span class="font-medium text-gray-800">AudioSet (Strong Labels)</span>
-        </div>
-        <div class="pl-10 text-gray-700">
-          Download the following TSVs from the <a href="https://research.google.com/audioset/download_strong.html" target="_blank" class="text-blue-600 hover:text-blue-800 underline">AudioSet Strong Labels page</a>:
-          <ul class="list-disc list-inside mt-2">
-            <li>mid_to_display_name.tsv</li>
-            <li>audioset_eval_strong.tsv</li>
-          </ul>
-        </div>
-      </div>
-  
-      <!-- Usage Note & Source -->
-      <div class="mt-6 text-sm text-gray-600">
-        <p>Note: The dataset is provided for research purposes only. Please refer to our license terms for usage conditions.</p>
-        <p class="mt-2">Dataset source: <a href="https://github.com/TXH-mercury/VALOR?tab=readme-ov-file" target="_blank" class="text-blue-600 hover:text-blue-800">VALOR Repository</a></p>
-      </div>
-    </div>
-  </div>
-  
-  
-  <!-- ===========================
+                <div class="bg-gray-50 p-6 rounded-lg" id="download">
+                    <h3 class="text-2xl text-center font-bold col-span-full mb-4">Download Dataset</h3>
+                    <div class="space-y-6">
+
+                        <!-- Combined Dataset (Flattened) -->
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                <span class="font-medium text-gray-800">Valor32k-AVQA v2.0 Dataset</span>
+                            </div>
+                            <div class="pl-10 space-y-2">
+                                <!-- Single ZIP link for all flattened files -->
+                                <div class="flex items-center space-x-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    <a href="https://pan.baidu.com/s/1aHWCwUOX1lJi0lSsmJb6Tw?pwd=e3ve" target="_blank"
+                                        class="text-blue-600 hover:text-blue-800 underline">
+                                        Download all video files
+                                    </a>
+                                    <span class="text-gray-600 ml-1">(from original Valor32K Repository)</span>
+                                </div>
+
+                                <div class="flex items-center space-x-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    <a href="https://github.com/inesriahi/valor32k-avqa-2/raw/refs/heads/main/data.zip"
+                                        target="_blank" class="text-blue-600 hover:text-blue-800 underline">
+                                        Download all JSON files (ZIP)
+                                    </a>
+                                </div>
+                                <!-- Plain-text file names -->
+                                <div class="ml-8 text-gray-700">
+                                    <ul class="list-disc list-inside mt-2">
+                                        <li>combined_dataset_train_flattened.json</li>
+                                        <li>combined_dataset_val_flattened.json</li>
+                                        <li>combined_dataset_test_flattened.json</li>
+                                        <li>combined_dataset_train.json</li>
+                                        <li>combined_dataset_val.json</li>
+                                        <li>combined_dataset_test.json</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AudioSet Files (Base) -->
+                        <div class="space-y-4 mt-6">
+                            <div class="flex items-center space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span class="font-medium text-gray-800">AudioSet (Base) Files</span>
+                            </div>
+                            <div class="pl-10 text-gray-700">
+                                Download the following CSVs from the
+                                <a href="https://research.google.com/audioset/download.html" target="_blank"
+                                    class="text-blue-600 hover:text-blue-800 underline">
+                                    AudioSet download page
+                                </a>:
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>eval_segments.csv</li>
+                                    <li>balanced_train_segments.csv</li>
+                                    <li>unbalanced_train_segments.csv</li>
+                                    <li>class_labels_indices.csv</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- AudioSet Files (Strong Labels) -->
+                        <div class="space-y-4 mt-6">
+                            <div class="flex items-center space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span class="font-medium text-gray-800">AudioSet (Strong Labels)</span>
+                            </div>
+                            <div class="pl-10 text-gray-700">
+                                Download the following TSVs from the
+                                <a href="https://research.google.com/audioset/download_strong.html" target="_blank"
+                                    class="text-blue-600 hover:text-blue-800 underline">
+                                    AudioSet Strong Labels page
+                                </a>:
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>mid_to_display_name.tsv</li>
+                                    <li>audioset_eval_strong.tsv</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Usage Note & Source -->
+                        <div class="mt-6 text-sm text-gray-600">
+                            <p>Note: The dataset is provided for research purposes only. Please refer to our license
+                                terms for usage conditions.</p>
+                            <p class="mt-2">
+                                Dataset source:
+                                <a href="https://github.com/TXH-mercury/VALOR?tab=readme-ov-file" target="_blank"
+                                    class="text-blue-600 hover:text-blue-800">
+                                    VALOR Repository
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- ===========================
        Dataset File Contents Description
   =========================== -->
-  <section id="dataset-contents" class="mt-12 bg-white p-6 rounded-lg shadow">
-    <h3 class="text-2xl font-bold mb-4 text-center">Dataset File Contents</h3>
-  
-    <!-- Combined Dataset (Flattened) -->
-    <div class="mb-8">
-      <h4 class="text-xl font-semibold mb-2">Combined Dataset (Flattened) Files</h4>
-      <p class="text-gray-700 leading-6 mb-2">
-        The “flattened” JSON files each contain a list of individual question objects. Every object represents a single
-        question generated for a particular 10-second video clip. Each entry includes:
-      </p>
-      <ul class="list-disc list-inside text-gray-700">
-        <li><strong>caption</strong>: The original video caption from Valor32K (e.g., “With the rumble, on a moving bus, a crowd spoke.”).</li>
-        <li><strong>video_id</strong>: Unique identifier for the source video segment (e.g., “x-2Abohj8VY”).</li>
-        <li><strong>question</strong>: The question generated by GPT-4o (or GPT-3.5 if generation failed).</li>
-        <li><strong>options</strong>: An array of four answer options (all similar length; only one is correct).</li>
-        <li><strong>correct_answer_idx</strong>: Index (0–3) indicating which option is correct.</li>
-        <li><strong>rephrased_answers</strong>: Three alternative phrasings of the correct answer.</li>
-        <li><strong>quality_rating</strong>: “obvious” if the answer can be directly inferred, or “guess” otherwise.</li>
-        <li><strong>modality</strong>: One of <em>visual</em>, <em>audio</em>, or <em>audio-visual</em> depending on which cues are needed to answer.</li>
-        <li><strong>category</strong>: Question category from <em>relative-position</em>, <em>description</em>, <em>action</em>, <em>temporal</em>, <em>count</em>, <em>location</em>.</li>
-        <li><strong>source_tags</strong>: Tags indicating information sources (e.g., “frames”, “caption”, “audio”).</li>
-        <li><strong>id</strong>: Unique identifier for each question entry in the flattened list.</li>
-        <li><strong>oid</strong>: Original ID linking back to the grouped (unflattened) entry for that video.</li>
-        <li><strong>model</strong>: Specifies “gpt4o” or “gpt3.5” indicating which model generated the question.</li>
-      </ul>
-    </div>
-  
-    <!-- Combined Dataset (Unflattened) -->
-    <div class="mb-8">
-      <h4 class="text-xl font-semibold mb-2">Combined Dataset (Unflattened) Files</h4>
-      <p class="text-gray-700 leading-6 mb-2">
-        The unflattened JSON files group multiple questions under each unique video ID. Each top‐level entry includes:
-      </p>
-      <ul class="list-disc list-inside text-gray-700">
-        <li><strong>video_id</strong>: Unique identifier for a 10-second video segment.</li>
-        <li><strong>caption</strong>: The original Valor32K caption for that segment.</li>
-        <li><strong>prompt</strong>: The text prompt used to generate the questions in this entry (shown only in unflattened form).</li>
-        <li><strong>questions</strong>: An array of question objects (similar structure to flattened entries, but grouped by video). Rare entries where GPT generates invalid <em>modality</em> or <em>category</em> are filtered out here.</li>
-        <li><strong>oid</strong>: Numerical ID for the video.</li>
-        <li><strong>model</strong>: Specifies “gpt4o” or “gpt3.5” indicating which model generated the question.</li>
-      </ul>
-    </div>
-  
-    <!-- Example Question Object -->
-    <div>
-      <h4 class="text-xl font-semibold mb-2">Example Entry (Flattened)</h4>
-      <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
+                <section id="dataset-contents" class="mt-12 bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Dataset File Contents</h3>
+
+                    <!-- Combined Dataset (Flattened) -->
+                    <div class="mb-8">
+                        <h4 class="text-xl font-semibold mb-2">Combined Dataset (Flattened) Files</h4>
+                        <p class="text-gray-700 leading-6 mb-2">
+                            The “flattened” JSON files each contain a list of individual question objects. Every object
+                            represents a single
+                            question generated for a particular 10-second video clip. Each entry includes:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700">
+                            <li><strong>caption</strong>: The original video caption from Valor32K (e.g., “With the
+                                rumble, on a moving bus, a crowd spoke.”).</li>
+                            <li><strong>video_id</strong>: Unique identifier for the source video segment (e.g.,
+                                “x-2Abohj8VY”).</li>
+                            <li><strong>question</strong>: The question generated by GPT-4o (or GPT-3.5 if generation
+                                failed).</li>
+                            <li><strong>options</strong>: An array of four answer options (all similar length; only one
+                                is correct).</li>
+                            <li><strong>correct_answer_idx</strong>: Index (0–3) indicating which option is correct.
+                            </li>
+                            <li><strong>rephrased_answers</strong>: Three alternative phrasings of the correct answer.
+                            </li>
+                            <li><strong>quality_rating</strong>: “obvious” if the answer can be directly inferred, or
+                                “guess” otherwise.</li>
+                            <li><strong>modality</strong>: One of <em>visual</em>, <em>audio</em>, or
+                                <em>audio-visual</em> depending on which cues are needed to answer.</li>
+                            <li><strong>category</strong>: Question category from <em>relative-position</em>,
+                                <em>description</em>, <em>action</em>, <em>temporal</em>, <em>count</em>,
+                                <em>location</em>.</li>
+                            <li><strong>source_tags</strong>: Tags indicating information sources (e.g., “frames”,
+                                “caption”, “audio”).</li>
+                            <li><strong>id</strong>: Unique identifier for each question entry in the flattened list.
+                            </li>
+                            <li><strong>oid</strong>: Original ID linking back to the grouped (unflattened) entry for
+                                that video.</li>
+                            <li><strong>model</strong>: Specifies “gpt4o” or “gpt3.5” indicating which model generated
+                                the question.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Combined Dataset (Unflattened) -->
+                    <div class="mb-8">
+                        <h4 class="text-xl font-semibold mb-2">Combined Dataset (Unflattened) Files</h4>
+                        <p class="text-gray-700 leading-6 mb-2">
+                            The unflattened JSON files group multiple questions under each unique video ID. Each
+                            top‐level entry includes:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700">
+                            <li><strong>video_id</strong>: Unique identifier for a 10-second video segment.</li>
+                            <li><strong>caption</strong>: The original Valor32K caption for that segment.</li>
+                            <li><strong>prompt</strong>: The text prompt used to generate the questions in this entry
+                                (shown only in unflattened form).</li>
+                            <li><strong>questions</strong>: An array of question objects (similar structure to flattened
+                                entries, but grouped by video). Rare entries where GPT generates invalid
+                                <em>modality</em> or <em>category</em> are filtered out here.</li>
+                            <li><strong>oid</strong>: Numerical ID for the video.</li>
+                            <li><strong>model</strong>: Specifies “gpt4o” or “gpt3.5” indicating which model generated
+                                the question.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Example Question Object -->
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2">Example Entry (Flattened)</h4>
+                        <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
   {
     "caption": "With the rumble, on a moving bus, a crowd spoke.",
     "video_id": "x-2Abohj8VY",
@@ -1705,24 +1788,30 @@
     "model": "gpt4o"
   }
       </pre>
-      <p class="mt-2 text-gray-700 leading-6">
-        In this example:
-      </p>
-      <ul class="list-disc list-inside text-gray-700">
-        <li><strong>caption</strong> and <strong>video_id</strong> come from Valor32K’s original segmentation.</li>
-        <li><strong>question</strong> and <strong>options</strong> were generated by GPT-4o (or GPT-3.5 if generation failed).</li>
-        <li><strong>correct_answer_idx</strong> (0-based) points to “Blue” in the options array.</li>
-        <li><strong>rephrased_answers</strong> provides three paraphrases of “Blue.”</li>
-        <li><strong>quality_rating</strong> “obvious” indicates this question can be answered directly from the provided information.</li>
-        <li><strong>modality</strong> “visual” means only visual cues are needed to answer.</li>
-        <li><strong>category</strong> “description” indicates a question about a static detail (shirt color).</li>
-        <li><strong>source_tags</strong> “frames” shows that no audio cues were required here.</li>
-        <li><strong>id</strong> and <strong>oid</strong> help link back to unflattened groupings.</li>
-        <li><strong>model</strong> specifies which GPT version generated this question.</li>
-      </ul>
-    </div>
-  </section>
-  
+                        <p class="mt-2 text-gray-700 leading-6">
+                            In this example:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700">
+                            <li><strong>caption</strong> and <strong>video_id</strong> come from Valor32K’s original
+                                segmentation.</li>
+                            <li><strong>question</strong> and <strong>options</strong> were generated by GPT-4o (or
+                                GPT-3.5 if generation failed).</li>
+                            <li><strong>correct_answer_idx</strong> (0-based) points to “Blue” in the options array.
+                            </li>
+                            <li><strong>rephrased_answers</strong> provides three paraphrases of “Blue.”</li>
+                            <li><strong>quality_rating</strong> “obvious” indicates this question can be answered
+                                directly from the provided information.</li>
+                            <li><strong>modality</strong> “visual” means only visual cues are needed to answer.</li>
+                            <li><strong>category</strong> “description” indicates a question about a static detail
+                                (shirt color).</li>
+                            <li><strong>source_tags</strong> “frames” shows that no audio cues were required here.</li>
+                            <li><strong>id</strong> and <strong>oid</strong> help link back to unflattened groupings.
+                            </li>
+                            <li><strong>model</strong> specifies which GPT version generated this question.</li>
+                        </ul>
+                    </div>
+                </section>
+
             </section>
 
             <section id="bibtex">
