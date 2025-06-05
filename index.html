@@ -51,6 +51,7 @@
                 <div class="flex items-center space-x-8">
                     <a href="#abstract" class="nav-link text-gray-600 hover:text-gray-900">Abstract</a>
                     <a href="#dataset" class="nav-link text-gray-600 hover:text-gray-900">Dataset</a>
+                    <a href="#prompt-examples" class="nav-link text-gray-600 hover:text-gray-900">Prompt Examples</a>
                     <a href="#statistics" class="nav-link text-gray-600 hover:text-gray-900">Statistics</a>
                     <!-- <a href="#visualizations" class="nav-link text-gray-600 hover:text-gray-900">Visualizations</a> -->
                     <a href="#download" class="nav-link text-gray-600 hover:text-gray-900">Download</a>
@@ -82,16 +83,18 @@
                         </svg>
                         <span>Paper</span>
                     </button>
-                    <a href="https://github.com/inesriahi/valor32k-avqa-2/tree/main/code" target="_blank" rel="noopener noreferrer">
-                        <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                  d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-                                  clip-rule="evenodd" />
-                          </svg>
-                          <span>Code</span>
+                    <a href="https://github.com/inesriahi/valor32k-avqa-2" target="_blank" rel="noopener noreferrer">
+                        <button
+                            class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span>Code</span>
                         </button>
-                      </a>
+                    </a>
                     <!-- <button class="px-4 py-2 rounded border shadow-sm hover:bg-gray-100 flex items-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
@@ -1566,6 +1569,23 @@
                         Table 2: Multiple choice question (MCQ) accuracy for each model and setup, broken down by
                         modality, category, and overall.
                     </p>
+
+                    <div class="mt-4">
+                        <h2 class="text-lg font-semibold text-gray-700 mb-2">References</h2>
+                        <ul class="list-disc list-inside text-sm text-gray-800">
+                            <li>
+                                Cheng, Zesen; Leng, Sicong; Zhang, Hang; Xin, Yifei; Li, Xin; Chen, Guanzheng; Zhu,
+                                Yongxin; Zhang, Wenqi; Luo, Ziyang; Zhao, Deli; <em>et al.</em> 2024. <em>VideoLLaMA 2:
+                                    Advancing Spatial-Temporal Modeling and Audio Understanding in Video-LLMs.</em>
+                                arXiv preprint arXiv:2406.07476.
+                            </li>
+                            <li>
+                                Du, Henghui; Li, Guangyao; Zhou, Chang; Zhang, Chunjie; Zhao, Alan; Hu, Di. 2025.
+                                <em>Crab: A Unified Audio-Visual Scene Understanding Model with Explicit
+                                    Cooperation.</em> arXiv preprint arXiv:2503.13068.
+                            </li>
+                        </ul>
+                    </div>
                 </section>
 
 
@@ -1721,10 +1741,12 @@
                             <li><strong>quality_rating</strong>: “obvious” if the answer can be directly inferred, or
                                 “guess” otherwise.</li>
                             <li><strong>modality</strong>: One of <em>visual</em>, <em>audio</em>, or
-                                <em>audio-visual</em> depending on which cues are needed to answer.</li>
+                                <em>audio-visual</em> depending on which cues are needed to answer.
+                            </li>
                             <li><strong>category</strong>: Question category from <em>relative-position</em>,
                                 <em>description</em>, <em>action</em>, <em>temporal</em>, <em>count</em>,
-                                <em>location</em>.</li>
+                                <em>location</em>.
+                            </li>
                             <li><strong>source_tags</strong>: Tags indicating information sources (e.g., “frames”,
                                 “caption”, “audio”).</li>
                             <li><strong>id</strong>: Unique identifier for each question entry in the flattened list.
@@ -1750,7 +1772,8 @@
                                 (shown only in unflattened form).</li>
                             <li><strong>questions</strong>: An array of question objects (similar structure to flattened
                                 entries, but grouped by video). Rare entries where GPT generates invalid
-                                <em>modality</em> or <em>category</em> are filtered out here.</li>
+                                <em>modality</em> or <em>category</em> are filtered out here.
+                            </li>
                             <li><strong>oid</strong>: Numerical ID for the video.</li>
                             <li><strong>model</strong>: Specifies “gpt4o” or “gpt3.5” indicating which model generated
                                 the question.</li>

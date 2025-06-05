@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
         title: 'Modality-Category Distribution',
         xaxis: {
             title: 'Category',
-            tickangle: -45
+            tickangle: 30
         },
         yaxis: {
             title: 'Modality'
