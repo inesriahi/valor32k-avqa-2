@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalityCategoryData = {
         visual: {
             description: 32050,
-            count: 27995,
             action: 20056,
+            count: 27995,
             temporal: 18785,
             location: 19146,
             'relative-position': 12593
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    const heatmapCategories = ['description', 'count', 'action', 'temporal', 'location', 'relative-position'];
+    const heatmapCategories = ['description', 'action', 'count', 'temporal', 'location', 'relative-position'];
     const heatmapModalities = ['visual', 'audio', 'audio-visual'];
 
     const heatmapData = [{

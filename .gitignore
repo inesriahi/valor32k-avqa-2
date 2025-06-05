@@ -1,0 +1,8 @@
+/code/saved_frames
+/code/__pycache__
+/code/audioset/audioset_eval_strong.tsv
+/code/audioset/balanced_train_segments.csv
+/code/audioset/class_labels_indices.csv
+/code/audioset/eval_segments.csv
+/code/audioset/mid_to_display_name.tsv
+/code/audioset/unbalanced_train_segments.csv
