@@ -977,11 +977,11 @@
                         </div>
                         <div class="bg-white p-4 rounded-lg shadow">
                             <h4 class="text-lg font-medium text-gray-700">Total Questions</h4>
-                            <p class="text-2xl font-bold text-blue-600">225,495</p>
+                            <p class="text-2xl font-bold text-blue-600">225,487</p>
                             <div class="mt-2 text-sm text-gray-600">
                                 <div class="flex justify-between">
                                     <span>Train:</span>
-                                    <span>177,140</span>
+                                    <span>177,132</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span>Val:</span>
@@ -1693,18 +1693,24 @@
                                     </td>
                                     <td class="px-4 py-3">FT</td>
 
-                                    <td class="px-4 py-3 text-center"><span class="underline">73.04</span></td> <!-- Audio -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">73.04</span></td>
+                                    <!-- Audio -->
                                     <td class="px-4 py-3 text-center"><strong>65.98</strong></td> <!-- Visual -->
-                                    <td class="px-4 py-3 text-center"><span class="underline">75.56</span></td> <!-- Audio-Visual -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">75.56</span></td>
+                                    <!-- Audio-Visual -->
                                     <td class="px-4 py-3"></td>
-                                    <td class="px-4 py-3 text-center"><span class="underline">78.03</span></td> <!-- Description -->
-                                    <td class="px-4 py-3 text-center"><span class="underline">78.78</span></td> <!-- Action -->
-                                    <td class="px-4 py-3 text-center"><strong>59.50</strong></td> <!-- Count (tie, bold both) -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">78.03</span></td>
+                                    <!-- Description -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">78.78</span></td>
+                                    <!-- Action -->
+                                    <td class="px-4 py-3 text-center"><strong>59.50</strong></td>
+                                    <!-- Count (tie, bold both) -->
                                     <td class="px-4 py-3 text-center"><strong>61.69</strong></td> <!-- Temporal -->
                                     <td class="px-4 py-3 text-center"><strong>68.39</strong></td> <!-- Location -->
                                     <td class="px-4 py-3 text-center"><strong>46.53</strong></td> <!-- Rel.-Position -->
 
-                                    <td class="px-4 py-3 text-center"><span class="underline">69.34</span></td> <!-- Overall -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">69.34</span></td>
+                                    <!-- Overall -->
                                 </tr>
 
                                 <!-- VAST with audio (FT only) -->
@@ -1715,15 +1721,20 @@
                                     <td class="px-4 py-3">FT</td>
 
                                     <td class="px-4 py-3 text-center"><strong>74.01</strong></td> <!-- Audio -->
-                                    <td class="px-4 py-3 text-center"><span class="underline">65.65</span></td> <!-- Visual -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">65.65</span></td>
+                                    <!-- Visual -->
                                     <td class="px-4 py-3 text-center"><strong>76.35</strong></td> <!-- Audio-Visual -->
                                     <td class="px-4 py-3"></td>
                                     <td class="px-4 py-3 text-center"><strong>78.53</strong></td> <!-- Description -->
                                     <td class="px-4 py-3 text-center"><strong>79.18</strong></td> <!-- Action -->
-                                    <td class="px-4 py-3 text-center"><strong>59.50</strong></td> <!-- Count (tie, bold both) -->
-                                    <td class="px-4 py-3 text-center"><span class="underline">61.63</span></td> <!-- Temporal -->
-                                    <td class="px-4 py-3 text-center"><span class="underline">68.13</span></td> <!-- Location -->
-                                    <td class="px-4 py-3 text-center"><span class="underline">45.76</span></td> <!-- Rel.-Position -->
+                                    <td class="px-4 py-3 text-center"><strong>59.50</strong></td>
+                                    <!-- Count (tie, bold both) -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">61.63</span></td>
+                                    <!-- Temporal -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">68.13</span></td>
+                                    <!-- Location -->
+                                    <td class="px-4 py-3 text-center"><span class="underline">45.76</span></td>
+                                    <!-- Rel.-Position -->
 
                                     <td class="px-4 py-3 text-center"><strong>69.49</strong></td> <!-- Overall -->
                                 </tr>
@@ -2102,14 +2113,24 @@
 
             <section id="bibtex">
                 <h2 class="text-xl font-semibold mb-2">BibTeX</h2>
-                <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">
-@article{
-  author = {Jon Doe, Jane Smith, Alice Johnson},
-  title = {A Simple Paper Webpage},
-  journal = {Journal of Example},
-  year = {2024}
+                <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code id="bibtex-code" class="language-bibtex">
+@inproceedings{10.1145/3746027.3758261,
+    author = {Riahi, Ines and Radman, Abduljalil and Guo, Zixin and Hedjam, Rachid and Laaksonen, Jorma},
+    title = {Valor32k-AVQA v2.0: Open-Ended Audio-Visual Question Answering Dataset and Benchmark},
+    year = {2025},
+    isbn = {9798400720352},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3746027.3758261},
+    doi = {10.1145/3746027.3758261},
+    booktitle = {Proceedings of the 33rd ACM International Conference on Multimedia},
+    pages = {13097–13103},
+    numpages = {7},
+    keywords = {audio-visual question answering (avqa), avqa dataset, multimodal fine-tuning, multimodal understanding},
+    location = {Dublin, Ireland},
+    series = {MM '25}
 }
-                </pre>
+                </code></pre>
             </section>
         </main>
     </div>
