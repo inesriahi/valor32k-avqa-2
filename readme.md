@@ -1,5 +1,7 @@
 [Project Webpage](https://inesriahi.github.io/valor32k-avqa-2/)
 
+[![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-ffcc4d?logo=huggingface&logoColor=black)](https://huggingface.co/datasets/inesriahi/valor32k-avqa-v2)
+
 # Valor32k-AVQA v2.0
 
 **Open-Ended Audio-Visual Question Answering Dataset and Benchmark**
@@ -98,6 +100,9 @@ All annotations are generated via a GPT-4o pipeline with human validation on a r
   combined_dataset_test.json  
   ```
 
+* **Hugging Face Dataset** (Dataset Viewer + `datasets` loading)
+  [https://huggingface.co/datasets/inesriahi/valor32k-avqa-v2](https://huggingface.co/datasets/inesriahi/valor32k-avqa-v2)
+
 * **Video Samples (Original Valor32K Repository)**
   [https://pan.baidu.com/s/1aHWCwUOX1lJi0lSsmJb6Tw?pwd=e3ve](https://pan.baidu.com/s/1aHWCwUOX1lJi0lSsmJb6Tw?pwd=e3ve)
 
@@ -164,6 +169,10 @@ video_samples/
 * Average: 9.95
 * Minimum: 2
 * Maximum: 31
+
+### Annotation Hygiene Note
+
+A post-generation validation found a small number of format-level annotation issues in the JSON release files: 100 MCQ entries originally had fewer than four options, 12 MCQ entries had duplicate answer options, 2,169 entries had four rephrased answers instead of three, and the flattened JSON files contained 22 invalid `modality` values and 39 invalid `category` values. These records were corrected in place without deleting any samples using [`code/fix_dataset_quality_issues.py`](https://github.com/inesriahi/valor32k-avqa-2/blob/main/code/fix_dataset_quality_issues.py).
 
 ---
 
@@ -269,11 +278,19 @@ video_samples/
 ## Citation (BibTeX)
 
 ```bibtex
-@article{valor32k_avqa_v2,
-  author  = {Jon Doe and Jane Smith and Alice Johnson},
-  title   = {Valor32k-AVQA v2.0: Open-Ended Audio-Visual Question Answering Dataset and Benchmark},
-  journal = {Journal of Example},
-  year    = {2025}
+@inproceedings{riahi2025valor32k,
+  author    = {Riahi, Ines and Radman, Abduljalil and Guo, Zixin and Hedjam, Rachid and Laaksonen, Jorma},
+  title     = {Valor32k-AVQA v2.0: Open-Ended Audio-Visual Question Answering Dataset and Benchmark},
+  booktitle = {Proceedings of the 33rd ACM International Conference on Multimedia},
+  series    = {MM '25},
+  year      = {2025},
+  pages     = {13097--13103},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  location  = {Dublin, Ireland},
+  isbn      = {9798400720352},
+  doi       = {10.1145/3746027.3758261},
+  url       = {https://doi.org/10.1145/3746027.3758261}
 }
 ```
 
